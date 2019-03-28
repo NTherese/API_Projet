@@ -1,0 +1,354 @@
+package projet_dao_crud;
+import Pharmacie.DAO.MedicamentDAO;
+import Pharmacie.DAO.DAO;
+import Pharmacie.DAO.MedecinDAO;
+import Pharmacie.DAO.PatientDAO;
+import Pharmacie.Metier.Medecins;
+import java.sql.*;
+import java.util.*;
+import Pharmacie.Metier.Medicaments;
+import Pharmacie.Metier.Patients;
+import connections.DBConnection;
+import static java.lang.System.exit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ *
+ * @author meril
+ */
+
+public class Projet_DAO_CRUD {
+    Connection dbc=null;
+    Scanner sc=new Scanner(System.in);
+    Connection dbConnect=DBConnection.getConnection();
+    DAO<Medicaments> MedDAO = new MedicamentDAO();
+    DAO<Medecins> MDAO = new MedecinDAO();
+    DAO<Patients> PDAO= new PatientDAO();
+    Patients pat=null;
+    Medicaments M=null;
+    Medecins medecin=null;
+
+    //Constructeur par defaut de la classe
+    public Projet_DAO_CRUD() {}
+    
+    //Methode de verification d'une chaine String avec une expression reguliere
+    public boolean verifier_chaine(String ch, String regex){
+                return ch.matches(regex);
+    }
+    
+    //Menu general du projet
+    public void MenuGeneral(){
+        int choix;
+        String option ="";
+        if(dbConnect==null){
+            System.out.println("Connection ivalide");
+            System.exit(1);
+        }
+        //System.out.println("Connexion etablie");
+        MedDAO.setDbConnect(dbConnect);
+        do{
+            do{
+                System.out.println("\n\t\tMENU GENERAL PROJET GESTION PHARMACIE: \n\t1-Gestion medicaments \n\t2-Gestion medecin \n\t3-Gestion patient \n\t4-Gestion prescription \n\t5-Quitter");
+                option=sc.nextLine();
+            }while(verifier_chaine(option,"[1-5]") == false);
+            choix =Integer.parseInt(option);
+            switch(choix){
+                        case 1: verif();break;
+                        case 2: menuMedecin();break;
+                        case 3: menuPat();break;
+                        case 4: break;
+                        case 5: exit(0); break; 
+            }
+        }while(choix!=5);
+        DBConnection.closeConnection();
+    }
+    
+    //=======================================   GESTION DES MEDICAMENTS (Ligne 63 à 189)     =======================================================
+    
+    //Menu gestion des medicaments
+    public void verif(){
+        int choix;
+        String option ="";
+        do{
+            do{
+                System.out.println("\n\t\tMENU MEDICAMENT: \n\t1-creation medicament \n\t2-Recherche medicament \n\t3-Consulter les medicaments prescrits \n\t4-Revenir au menu principal");
+                option=sc.nextLine();
+            }while(verifier_chaine(option,"[1-4]") == false);
+            choix =Integer.parseInt(option);
+            switch(choix){
+                        case 1: creation();break;
+                        case 2: recherche();break;
+                        case 3: vue(); break;
+                        case 4: MenuGeneral(); break; 
+            }
+        }while(choix!=4);
+    }
+    
+    //Utilisation de la vue sur la quantite prescrite pour l'id d'un medicament precis
+    public void vue(){
+        MedicamentDAO m=new MedicamentDAO();
+        System.out.println("Entrez l'identifiant du medicament: ");
+        int id=sc.nextInt();
+        sc.skip("\n");
+        try{
+            m.affichVue(id);
+        } catch (SQLException e) {
+            System.out.println("Erreur: "+e);
+        }
+    }
+    
+    //Creation medicament
+    public void creation(){
+        System.out.println("Nom: ");
+        String nom=sc.nextLine();
+        System.out.println("Description: ");
+        String des=sc.nextLine();
+        System.out.println("Code: ");
+        String code=sc.nextLine();
+        Medicaments md=new Medicaments(0,nom,des,code);
+        try{
+            md=MedDAO.create(md);
+            int id=md.getIdmed();
+            System.out.println("Le numero du medicament est: "+id);
+        } catch (SQLException e) {
+            System.out.println("Erreur: "+e);
+        }
+    }
+        
+    //Recherche medicament
+    public void recherche() {
+        String option="";
+        int choix;
+        try {
+            System.out.println("code recherché :");
+            String nc = sc.nextLine();
+            M=MedDAO.read(nc);
+            System.out.println("Medicament actuel : " + M);
+            do{
+                    do{
+                        System.out.println("Operations à faire sur le medicament: \n\t1-Modifier \n\t2-Supprimer \n\t3-Revenir au menu precedent");
+                        option=sc.nextLine();
+                    }while(verifier_chaine(option,"[1-3]")==false);
+                    choix =Integer.parseInt(option);
+                    switch(choix){
+                        case 1: modification();break;
+                        case 2: supprim();verif();
+                        case 3: break;
+                    }
+                }while(choix!=3);
+
+        } catch (SQLException e) {
+            System.out.println("Erreur recherche medicament" + e.getMessage());
+        }
+         sc.skip("\n");
+    }
+    
+    //modification du medicament
+    public void modification() {
+        String option=""; int choix;
+        try {
+            sc.skip("\n");
+            do{
+            do{
+                System.out.println("Que voulez-vous modifier? \n\t1-Nom \n\t2-Description \n\t3-Code \n\t4-Revenir au menu precedent");
+                option=sc.nextLine();
+            }while(verifier_chaine(option,"[1-4]")==false);
+            choix =Integer.parseInt(option);
+            switch(choix){
+                        case 1: 
+                            System.out.println("Entrez le nom: ");
+                            String nom=sc.nextLine();
+                            M.setNom(nom);
+                            MedDAO.update(M); break;
+                        case 2: 
+                            System.out.println("Entrez la description: ");
+                            String des=sc.nextLine();
+                            M.setDesc(des);
+                            MedDAO.update(M);break;
+                        case 3: 
+                            System.out.println("Entrez le code: ");
+                            String code=sc.nextLine();
+                            M.setCode(code);
+                            MedDAO.update(M);break; 
+                        case 4: break;
+            }
+        }while(choix!=4);
+        } catch (SQLException e) {
+            System.out.println("erreur " + e.getMessage());
+        }
+
+    }
+    
+    //Suppression du medicament
+    public void supprim() {
+        try {
+            MedDAO.delete(M);
+        } catch (SQLException e) {
+            System.out.println("erreur " + e.getMessage());
+        }
+    }
+    
+    
+    //==========================================    GESTION DES MEDECINS (Lignes 189 à 300)    ==========================================================
+    
+    //Menu gestion des medecins
+    public void menuMedecin(){
+        int choix;
+        String option ="";
+        do{
+            do{
+                System.out.println("\n\t\tMENU MEDECINS: \n\t1-creation medecin \n\t2-Recherche medecin  \n\t3-Revenir au menu principal");
+                option=sc.nextLine();
+            }while(verifier_chaine(option,"[1-3]") == false);
+            choix =Integer.parseInt(option);
+            switch(choix){
+                        case 1: creMedecin();break;
+                        case 2: rechMedecin();break;
+                        case 3: MenuGeneral(); break; 
+            }
+        }while(choix!=3);
+    }
+    
+    //Creation medecin
+    public void creMedecin(){
+        System.out.println("Matricule: ");
+        String mat=sc.nextLine();
+        System.out.println("Nom: ");
+        String nom=sc.nextLine();
+        System.out.println("Prenom:  ");
+        String pre=sc.nextLine();
+        System.out.println("Telephone : ");
+        String tel=sc.nextLine();
+        Medecins md=new Medecins(0,mat,nom,pre,tel);
+        try{
+            md=MDAO.create(md);
+            int id=md.getIdmed();
+            System.out.println("Le numero du medecin est: "+id);
+        } catch (SQLException e) {
+            System.out.println("Erreur cre medecin: "+e);
+        }
+    }
+    
+    //Recherche medecin
+    public void rechMedecin() {
+        String option="";
+        int choix;
+        try {
+            System.out.println("Matricule recherché :");
+            String mat = sc.nextLine();
+            medecin=MDAO.read(mat);
+            System.out.println("Medecin actuel : " + medecin);
+            do{
+                    do{
+                        System.out.println("Operations à faire sur le medecin: \n\t1-Modifier \n\t2-Supprimer \n\t3-Revenir au menu precedent");
+                        option=sc.nextLine();
+                    }while(verifier_chaine(option,"[1-3]")==false);
+                    choix =Integer.parseInt(option);
+                    switch(choix){
+                        case 1: modifMedecin();break;
+                        case 2: supMedecin();menuMedecin();
+                        case 3: break;
+                    }
+                }while(choix!=3);
+
+        } catch (SQLException e) {
+            System.out.println("Erreur recherche medecin " + e.getMessage());
+        }
+         sc.skip("\n");
+    }
+    
+    //Modification d'infos du medecin
+    public void modifMedecin() {
+        String option=""; int choix;
+        try {
+            sc.skip("\n");
+            do{
+            do{
+                System.out.println("Que voulez-vous modifier? \n\t1-Nom \n\t2-Prenom \n\t3-telephone \n\t4-Revenir au menu precedent");
+                option=sc.nextLine();
+            }while(verifier_chaine(option,"[1-4]")==false);
+            choix =Integer.parseInt(option);
+            switch(choix){
+                        case 1: 
+                            System.out.println("Entrez le nom: ");
+                            String nom=sc.nextLine();
+                            medecin.setNom(nom);
+                            MDAO.update(medecin); break;
+                        case 2: 
+                            System.out.println("Entrez le prenom ");
+                            String pre=sc.nextLine();
+                            medecin.setPrenom(pre);
+                            MDAO.update(medecin);break;
+                        case 3: 
+                            System.out.println("Entrez le telephone: ");
+                            String tel=sc.nextLine();
+                            medecin.setTel(tel);
+                            MDAO.update(medecin);break; 
+                        case 4: break;
+            }
+        }while(choix!=4);
+        } catch (SQLException e) {
+            System.out.println("Erreur dans la modification du medecin" + e.getMessage());
+        }
+
+    }
+    
+    
+    //Suppresion d'un medecin
+    public void supMedecin() {
+        try {
+            MDAO.delete(medecin);
+        } catch (SQLException e) {
+            System.out.println("Erreur de suppresion du medecin " + e.getMessage());
+        }
+    }
+    
+    
+    //======================================    GESTION DES PATIENTS    ===========================================================================
+    
+    //Menu gestion des patients
+    public void menuPat(){
+        int choix;
+        String option ="";
+        do{
+            do{
+                System.out.println("\n\t\tMENU PATIENTS: \n\t1-creation patient \n\t2-Recherche patient  \n\t3-Revenir au menu principal");
+                option=sc.nextLine();
+            }while(verifier_chaine(option,"[1-3]") == false);
+            choix =Integer.parseInt(option);
+            switch(choix){
+                        case 1: crePat();break;
+                        case 2: break;
+                        case 3: break; 
+            }
+        }while(choix!=3);
+    }
+    
+    //Creation patient
+     public void crePat(){
+        System.out.println("Nom: ");
+        String nom=sc.nextLine();
+        System.out.println("Prenom:  ");
+        String pre=sc.nextLine();
+        System.out.println("Telephone : ");
+        String tel=sc.nextLine();
+        Patients md=new Patients(0,nom,pre,tel);
+        try{
+            md=PDAO.create(md);
+            int id=md.getIdpat();
+            System.out.println("Le numero du patient est: "+id);
+        } catch (SQLException e) {
+            System.out.println("Erreur creation patient: "+e);
+        }
+    }
+    
+    
+    
+    
+    public static void main(String[] args) {
+        Projet_DAO_CRUD proj=new Projet_DAO_CRUD();
+        proj.MenuGeneral();
+    }
+    
+}
