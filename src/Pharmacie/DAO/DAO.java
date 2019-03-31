@@ -20,7 +20,7 @@ public abstract class DAO<T> {
 	 * @return T objet trouvé
          * @throws SQLException objet non trouvé
     */  
-    public abstract T read(String code) throws SQLException;
+    public abstract T read(int id) throws SQLException;
     
     
     /**

@@ -19,7 +19,7 @@ import java.sql.SQLException;
 public class PatientDAO extends DAO<Patients>{
     Connection dbConnect=DBConnection.getConnection();
     
-    @Override
+    
     public Patients read(String nom) throws SQLException {
         Patients p=null;
         String req="select * from api_patient where nom like ?";
@@ -46,6 +46,7 @@ public class PatientDAO extends DAO<Patients>{
      * @param id identifiant du patient
      * @return patient trouvé
      */
+    @Override
     public Patients read(int id) throws SQLException {
         Patients p=null;
         String req="select * from api_patient where idpat=?";

@@ -26,6 +26,7 @@ public class MedicamentDAO extends DAO<Medicaments> {
      * @param id identifiant du medicament
      * @return medicament trouvé
      */
+        @Override
     public Medicaments read(int id) throws SQLException {
         Medicaments m=null;
         String req="select * from api_medicament where idmedoc=?";
@@ -52,7 +53,6 @@ public class MedicamentDAO extends DAO<Medicaments> {
      * @return medicament trouve
      * @throws SQLException code inconnu
      */
-    @Override
     public Medicaments read(String code) throws SQLException {
         Medicaments m=null;
         String req="select * from api_medicament where code=?";
@@ -196,32 +196,6 @@ public class MedicamentDAO extends DAO<Medicaments> {
         
     }
     
-    
-    /**
-     * Methode permettant de recuperer les données de la vue sur la quantite de medicaments prescrits
-     * @throws SQLException 
-     */
-    public void affichVue(int id) throws SQLException {
-       String req="select * from qtite_presc where idmedoc=?";
-        try(PreparedStatement p=dbConnect.prepareStatement(req)){
-            p.setInt(1,id);
-            try(ResultSet rs=p.executeQuery()){
-                while(rs.next()){
-                    String nom=rs.getString("NOM");
-                     String des=rs.getString("DESCRIPTION");
-                     int qte=rs.getInt("somme");
-                     String unit=rs.getString("UNITE");
-                    System.out.println("\tMedicament N* "+id+" Nom: "+nom+"\tDescription: "+des+"\n\t\t Quantite: "+qte+"\t Unite: "+unit);
-                }
-            }
-            catch(SQLException e){
-                  System.out.println("Erreur1 resultset: "+e);
-             }
-        }
-        catch(SQLException e){
-            System.out.println("Erreur affich vue: "+e);
-        }
-    }
     
 }
 

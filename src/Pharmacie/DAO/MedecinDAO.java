@@ -21,35 +21,15 @@ import java.sql.SQLException;
 public class MedecinDAO extends DAO<Medecins> {
     Connection dbConnect=DBConnection.getConnection();
 
-    @Override
-    public Medecins read(String mat) throws SQLException {
-        Medecins m=null;
-        String req="select * from api_medecin where matricule like ?";
-         try(PreparedStatement p1=dbConnect.prepareStatement(req)){
-             p1.setString(1, "%"+mat+"%");
-             try(ResultSet rs=p1.executeQuery()){
-                 if(rs.next()){
-                     int id=rs.getInt("IDMED");
-                     String nom=rs.getString("NOM");
-                     String pre=rs.getString("PRENOM");
-                     String tel=rs.getString("TEL");
-                     m=new Medecins(id,mat,nom,pre,tel);
-                 }
-                 else{
-                     throw new SQLException("Matricule du medecin inconnu");
-                 }
-             }
-         }
-        return m;
-    }
 
-    
+       
     /**
      * récupération des données d'un medecin sur base de son identifiant
      * @throws SQLException identifiant inconnu
      * @param id identifiant du medecin
      * @return medecin trouvé
      */
+    @Override
     public Medecins read(int id) throws SQLException {
         Medecins m=null;
         String req="select * from api_medecin where idmed=?";
@@ -141,6 +121,27 @@ public class MedecinDAO extends DAO<Medecins> {
                 System.out.println("Suppression effectuée avec succes!!!!");
             }
         }
+    }
+    
+    public Medecins read(String mat) throws SQLException {
+        Medecins m=null;
+        String req="select * from api_medecin where matricule like ?";
+         try(PreparedStatement p1=dbConnect.prepareStatement(req)){
+             p1.setString(1, "%"+mat+"%");
+             try(ResultSet rs=p1.executeQuery()){
+                 if(rs.next()){
+                     int id=rs.getInt("IDMED");
+                     String nom=rs.getString("NOM");
+                     String pre=rs.getString("PRENOM");
+                     String tel=rs.getString("TEL");
+                     m=new Medecins(id,mat,nom,pre,tel);
+                 }
+                 else{
+                     throw new SQLException("Matricule du medecin inconnu");
+                 }
+             }
+         }
+        return m;
     }
     
 }
