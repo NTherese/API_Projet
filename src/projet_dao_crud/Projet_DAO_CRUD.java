@@ -1,9 +1,12 @@
 package projet_dao_crud;
+import Pharmacie.DAO.InfoPrescDAO;
 import Pharmacie.DAO.MedicamentDAO;
 import Pharmacie.DAO.MedecinDAO;
 import Pharmacie.DAO.PatientDAO;
 import Pharmacie.DAO.PrescriptionDAO;
+import Pharmacie.DAO.vue_pres_medicDAO;
 import Pharmacie.DAO.vue_qtite_prescDAO;
+import Pharmacie.Metier.InfoPrescriptions;
 import Pharmacie.Metier.Medecins;
 import java.sql.*;
 import java.util.*;
@@ -29,11 +32,13 @@ public class Projet_DAO_CRUD {
     private PatientDAO PDAO= new PatientDAO();
     private vue_qtite_prescDAO Vue=new vue_qtite_prescDAO();
     private PrescriptionDAO prescripDAO = new PrescriptionDAO();
+    private InfoPrescDAO infoDAO= new InfoPrescDAO();
     Patients pat=null;
     Medicaments M=null;
     Medecins medecin=null;
     vue_qtite_presc v=null;
     Prescriptions prescription=null;
+    InfoPrescriptions info =null;
 
     //Constructeur par defaut de la classe
     public Projet_DAO_CRUD() {}
@@ -55,22 +60,23 @@ public class Projet_DAO_CRUD {
         MedDAO.setDbConnect(dbConnect);
         do{
             do{
-                System.out.println("\n\t\tMENU GENERAL PROJET GESTION PHARMACIE: \n\t1-Gestion medicaments \n\t2-Gestion medecin \n\t3-Gestion patient \n\t4-Gestion prescription \n\t5-Quitter");
+                System.out.println("\n\t\tMENU GENERAL PROJET GESTION PHARMACIE: \n\t1-Gestion medicaments \n\t2-Gestion medecin \n\t3-Gestion patient \n\t4-Gestion prescription \n\t5- Gestion des informations de la prescription \n\t6-Quitter");
                 option=sc.nextLine();
-            }while(verifier_chaine(option,"[1-5]") == false);
+            }while(verifier_chaine(option,"[1-6]") == false);
             choix =Integer.parseInt(option);
             switch(choix){
                         case 1: verif();break;
                         case 2: menuMedecin();break;
                         case 3: menuPat();break;
                         case 4: menuPrescrip();break;
-                        case 5: exit(0); break; 
+                        case 5: menuInfos(); break;
+                        case 6: exit(0); break; 
             }
         }while(choix!=5);
         DBConnection.closeConnection();
     }
     
-    //=======================================   GESTION DES MEDICAMENTS (Ligne 63 à 189)     =======================================================
+    //=======================================   GESTION DES MEDICAMENTS + VUE  =======================================================
     
     //Menu gestion des medicaments
     public void verif(){
@@ -196,7 +202,7 @@ public class Projet_DAO_CRUD {
     }
     
     
-    //==========================================    GESTION DES MEDECINS (Lignes 189 à 300)    ==========================================================
+    //==========================================    GESTION DES MEDECINS    ==========================================================
     
     //Menu gestion des medecins
     public void menuMedecin(){
@@ -311,7 +317,7 @@ public class Projet_DAO_CRUD {
     }
     
     
-    //======================================    GESTION DES PATIENTS  (lignes 309 à 421)  ===========================================================================
+    //======================================    GESTION DES PATIENTS    ===========================================================================
     
     //Menu gestion des patients
     public void menuPat(){
@@ -502,10 +508,96 @@ public class Projet_DAO_CRUD {
         }
     }
 
-    //========================================  GESTION DES INFOS DES PRESCRIPTIONS ========================================================
+    //========================================  GESTION DES INFOS DES PRESCRIPTIONS + VUE ========================================================
+    //Menu gestion des informations sur une prescription
+    public void menuInfos(){
+        int choix;
+        String option ="";
+        do{
+            do{
+                System.out.println("\n\t\tMENU INFOS PRESCRIPTIONS: \n\t1-creation infos prescription \n\t2-Recherche prescription \n\t3-Afficher la liste des precriptions  \n\t4-Revenir au menu principal");
+                option=sc.nextLine();
+            }while(verifier_chaine(option,"[1-3]") == false);
+            choix =Integer.parseInt(option);
+            switch(choix){
+                        case 1: creInfPres();break;
+                        case 2: rechInfPres();break;
+                        case 3: vueP();break;
+                        case 4:  MenuGeneral();
+            }
+        }while(choix!=3);
+    }
     
-    
+    //Creation infos prescriptions
+     public void creInfPres(){
+         System.out.println("id de la prescription: ");
+         int idpres=sc.nextInt();
+        System.out.println("id du medicament:  ");
+        int idmedoc=sc.nextInt();
+        System.out.println("Quantite precrites : ");
+        int qte=sc.nextInt();
+        sc.skip("\n");
+         System.out.println("Unite du medicament prescrit: ");
+         String unite=sc.nextLine();
+        InfoPrescriptions pres= new InfoPrescriptions(0,idpres,idmedoc,qte,unite);
+        try{
+            pres=infoDAO.create(pres);
+            int id=pres.getIdinfos();
+            System.out.println("Le numero de l'information cre est: "+id);
+        } catch (SQLException e) {
+            System.out.println("Erreur creation info prescription: "+e);
+        }
+    }
      
+     //Recherche d'une information de prescription
+     public void rechInfPres(){
+         String option="";
+        int choix;
+        try {
+            System.out.println("Identifiant recherché :");
+            int id=sc.nextInt();sc.skip("\n");
+            info=infoDAO.read(id);
+            System.out.println("Info de la prescription actuelle : " + info);
+            do{
+                    do{
+                        System.out.println("Operations à faire : \n\t1-Supprimer \n\t2-Revenir au menu precedent");
+                        option=sc.nextLine();
+                    }while(verifier_chaine(option,"[1-2]")==false);
+                    choix =Integer.parseInt(option);
+                    switch(choix){
+                        case 1: supInfPres();menuPrescrip();
+                        case 2: break;
+                    }
+                }while(choix!=3);
+        } catch (SQLException e) {
+            System.out.println("Erreur recherche info d'une prescription " + e.getMessage());
+        }
+         sc.skip("\n");
+     }
+     
+     //Suppresion d'une information
+    public void supInfPres() {
+        try {
+            infoDAO.delete(info);
+        } catch (SQLException e) {
+            System.out.println("Erreur de suppresion de l'info de la  prescription " + e.getMessage());
+        }
+    }
+     
+    
+    //Utilisation de la vue sur les informations des prescriptions
+    public void vueP(){
+        vue_pres_medicDAO vueQt = new vue_pres_medicDAO();
+        sc.skip("\n");
+        try{
+            System.out.println(vueQt.affichVue());
+        } catch (SQLException e) {
+            System.out.println("Erreur: "+e);
+        }
+    }
+    
+    
+    
     public static void main(String[] args) {
         Projet_DAO_CRUD proj=new Projet_DAO_CRUD();
         proj.MenuGeneral();
