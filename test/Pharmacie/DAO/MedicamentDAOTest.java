@@ -5,10 +5,15 @@
  */
 package Pharmacie.DAO;
 
+import Pharmacie.Metier.InfoPrescriptions;
+import Pharmacie.Metier.Medecins;
 import Pharmacie.Metier.Medicaments;
+import Pharmacie.Metier.Patients;
+import Pharmacie.Metier.Prescriptions;
 import connections.DBConnection;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -57,7 +62,7 @@ public class MedicamentDAOTest {
         int id = 0;
         MedicamentDAO instance = new MedicamentDAO();
         instance.setDbConnect(dbConnect);
-        Medicaments  obj=new Medicaments(0,"Testnom","Testdesc","Testcode");
+        Medicaments  obj=new Medicaments(0,"TestnomRDI","TestdescRDI","TestcodeRDI");
         Medicaments expResult = instance.create(obj);
         id=expResult.getIdmed();
         Medicaments result = instance.read(id);
@@ -66,6 +71,7 @@ public class MedicamentDAOTest {
         try{
             result=instance.read(0);
             fail("Exception d'id inconnu non genere");
+            instance.delete(obj);
         }
         catch(SQLException e){}
         instance.delete(result);
@@ -81,7 +87,7 @@ public class MedicamentDAOTest {
         String code = "";
         MedicamentDAO instance = new MedicamentDAO();
         instance.setDbConnect(dbConnect);
-        Medicaments obj=new Medicaments(0,"Testnom","Testdesc","Testcode");
+        Medicaments obj=new Medicaments(0,"TestnomRDS","TestdescRDS","TestcodeRDS");
         Medicaments expResult = instance.create(obj);
         code=expResult.getCode();
         Medicaments result = instance.read(code);
@@ -90,6 +96,7 @@ public class MedicamentDAOTest {
         try{
             result=instance.read(0);
             fail("Exception d'un code inconnu non genere");
+            instance.delete(obj);
         }
         catch(SQLException e){}
         instance.delete(result);
@@ -103,10 +110,10 @@ public class MedicamentDAOTest {
     public void testCreate() throws Exception {
         System.out.println("create");
         
-        Medicaments obj = new Medicaments(0,"Testnom","Testdesc","TestCode");
+        Medicaments obj = new Medicaments(0,"TestnomC","TestdescC","TestCodeC");
         MedicamentDAO instance = new MedicamentDAO();
         instance.setDbConnect(dbConnect);
-        Medicaments expResult = new Medicaments(0,"Testnom","Testdesc","TestCode");
+        Medicaments expResult = new Medicaments(0,"TestnomC","TestdescC","TestCodeC");
         Medicaments result = instance.create(obj);
         
         assertEquals("Codes differents",expResult.getCode(), result.getCode());
@@ -115,14 +122,14 @@ public class MedicamentDAOTest {
         assertNotEquals("id medicament reste à zero",result.getIdmed(),expResult.getIdmed());
         int idmed=result.getIdmed();
         
-        obj=new Medicaments(0,"Testnom2","Testdesc2","TestCode");
+        obj=new Medicaments(0,"TestnomC2","TestdescC2","TestCodeC");
         try{
             obj=instance.create(obj);
             fail("Exception de doublons non generee");
             instance.delete(obj);
         }
         catch(Exception e){}
-        instance.delete(result);        
+        instance.delete(result);   
     }
 
     /**
@@ -131,22 +138,23 @@ public class MedicamentDAOTest {
     @Test
     public void testUpdate() throws Exception {
         System.out.println("update");
-        Medicaments obj = new Medicaments(0,"Testnom","Testdesc","Testcode");
+        Medicaments obj = new Medicaments(0,"TestnomUP","TestdescUP","TestcodeUP");
         MedicamentDAO instance = new MedicamentDAO();
         instance.setDbConnect(dbConnect);
         obj=instance.create(obj);
-        obj.setNom("TestNom2");
+        obj.setNom("TestNomUP6");
         //etc
-        obj.setDesc("Testdesc2");
+        obj.setDesc("TestdescUP6");
         //etc
         
         Medicaments expResult = obj;
         Medicaments result = instance.update(obj);
-        assertEquals(expResult.getNom(), result.getNom());
+        assertEquals("Noms differents ",expResult.getNom(), result.getNom());
         //etc
-        assertEquals(expResult.getDesc(), result.getDesc());
+        assertEquals("Decription differentes ",expResult.getDesc(), result.getDesc());
         //etc
-        instance.delete(obj);
+        instance.delete(result);
+       
         // TODO review the generated test code and remove the default call to fail.
         
     }
@@ -157,7 +165,7 @@ public class MedicamentDAOTest {
     @Test
     public void testDelete() throws Exception {
         System.out.println("delete");
-        Medicaments obj = new Medicaments(0,"Testnom","Testdesc","Testcode");
+        Medicaments obj = new Medicaments(0,"TestnomDL","TestdescDL","TestcodeDL");
         MedicamentDAO instance = new MedicamentDAO();
         instance.setDbConnect(dbConnect);
         obj=instance.create(obj);
@@ -167,8 +175,39 @@ public class MedicamentDAOTest {
             fail("Exception de record introuvable non generee");
         }
         catch(SQLException e){}
-        // TODO review the generated test code and remove the default call to fail.
+        instance.create(obj);
+        Patients patient=new Patients(0,"Testnompat","Testprenompat","Testtelpat");
+       PatientDAO patientd= new PatientDAO();
+       patientd.setDbConnect(dbConnect);
+       patient=patientd.create(patient);
+       
+        Medecins medecin=new Medecins(0,"TestmatriMD","Testnom","Testprenom","Testtel");
+        MedecinDAO medecind=new MedecinDAO();
+        medecind.setDbConnect(dbConnect);
+        medecin=medecind.create(medecin);
         
+        Prescriptions prescription=new Prescriptions(0,LocalDate.now(),medecin.getIdmed(),patient.getIdpat());
+        PrescriptionDAO prescriptiond= new PrescriptionDAO();
+        prescriptiond.setDbConnect(dbConnect);
+        prescription=prescriptiond.create(prescription);
+        
+        
+        InfoPrescriptions infopres = new InfoPrescriptions(0,prescription.getIdpres(),obj.getIdmed(),5,"Testunite");
+        InfoPrescDAO infopresd= new InfoPrescDAO();
+        infopresd.setDbConnect(dbConnect);
+        infopres=infopresd.create(infopres);
+        
+        try{
+            instance.delete(obj);
+            fail("Exception de record de parent clé etrangere");
+        }
+        catch(Exception e){}
+        infopresd.delete(infopres);
+        prescriptiond.delete(prescription);
+        medecind.delete(medecin);
+        patientd.delete(patient);
+        instance.delete(obj);
+       
     }
 
     /**
@@ -177,8 +216,8 @@ public class MedicamentDAOTest {
     @Test
     public void testRechNom() throws Exception {
         System.out.println("rechNom");
-        Medicaments obj1=new Medicaments(0,"Testnom","Testdesc","TestCode");
-        Medicaments obj2=new Medicaments(0,"Testnom","Testdesc2","TestCode2");
+        Medicaments obj1=new Medicaments(0,"TestnomRC","TestdescRC","TestCodeRC");
+        Medicaments obj2=new Medicaments(0,"TestnomRC","TestdescRC2","TestCodeRC2");
         String nomrech = "Testnom";
         MedicamentDAO instance = new MedicamentDAO();
         instance.setDbConnect(dbConnect);
