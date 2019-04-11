@@ -1,5 +1,7 @@
 package Pharmacie.Metier;
 
+import java.util.Objects;
+
 /**
  * classe métier de gestion d'un medicament
  * @author meril
@@ -101,6 +103,30 @@ public class Medicaments {
     @Override
     public String toString() {
         return "Medicaments{" + "idmed=" + idmed + ", nom=" + nom + ", desc=" + desc + ", code=" + code + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Medicaments other = (Medicaments) obj;
+        if (!Objects.equals(this.nom, other.nom)) {
+            return false;
+        }
+        return true;
     }
     
     
