@@ -70,8 +70,8 @@ public class InfoPrescDAO extends DAO<InfoPrescriptions> {
             p2.setString(4,obj.getUnite());            
             try(ResultSet rs=p2.executeQuery()){
                 if(rs.next()){
-                    int idinfos=rs.getInt("IDINFOS");
-                    obj.setIdinfos(idinfos);
+                    int idinfos=rs.getInt(1);
+                    
                     info=read(idinfos);
                 }
                 else{

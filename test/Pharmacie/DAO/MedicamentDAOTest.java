@@ -10,6 +10,7 @@ import Pharmacie.Metier.Medecins;
 import Pharmacie.Metier.Medicaments;
 import Pharmacie.Metier.Patients;
 import Pharmacie.Metier.Prescriptions;
+import Pharmacie.Metier.vue_qtite_presc;
 import connections.DBConnection;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -113,7 +114,7 @@ public class MedicamentDAOTest {
         Medicaments obj = new Medicaments(0,"TestnomC","TestdescC","TestCodeC");
         MedicamentDAO instance = new MedicamentDAO();
         instance.setDbConnect(dbConnect);
-        Medicaments expResult = new Medicaments(0,"TestnomC","TestdescC","TestCodeC");
+        Medicaments expResult = obj;
         Medicaments result = instance.create(obj);
         
         assertEquals("Codes differents",expResult.getCode(), result.getCode());
@@ -155,14 +156,13 @@ public class MedicamentDAOTest {
         //etc
         instance.delete(result);
        
-        // TODO review the generated test code and remove the default call to fail.
         
     }
 
     /**
      * Test of delete method, of class MedicamentDAO.
      */
-    @Test
+    //@Test
     public void testDelete() throws Exception {
         System.out.println("delete");
         Medicaments obj = new Medicaments(0,"TestnomDL","TestdescDL","TestcodeDL");
@@ -218,15 +218,52 @@ public class MedicamentDAOTest {
         System.out.println("rechNom");
         Medicaments obj1=new Medicaments(0,"TestnomRC","TestdescRC","TestCodeRC");
         Medicaments obj2=new Medicaments(0,"TestnomRC","TestdescRC2","TestCodeRC2");
-        String nomrech = "Testnom";
+        String nomrech = "TestnomRC";
         MedicamentDAO instance = new MedicamentDAO();
         instance.setDbConnect(dbConnect);
         obj1=instance.create(obj1);
         obj2=instance.create(obj2);
         
-        List<Medicaments> result = instance.rechNom(nomrech);
-        if(result.indexOf(obj1)<0) fail("record introuvable "+obj1);
-        if(result.indexOf(obj2)<0) fail("record introuvable "+obj2);
+        Patients patient=new Patients(0,"NomTest","PrenomTest","0000000000");
+        PatientDAO patientd=new PatientDAO();
+        patientd.setDbConnect(dbConnect);
+        patient=patientd.create(patient);
+        
+        Medecins medecin=new Medecins(0,"MT","NomTest","PrenomTest","0000000000");
+        MedecinDAO medecind= new MedecinDAO();
+        medecind.setDbConnect(dbConnect);
+        medecin=medecind.create(medecin);
+        
+        Prescriptions prescription=new Prescriptions(0,LocalDate.now(),medecin.getIdmed(),patient.getIdpat());
+        PrescriptionDAO prescriptiond=new PrescriptionDAO();
+        prescriptiond.setDbConnect(dbConnect);
+        prescription=prescriptiond.create(prescription);
+        
+        InfoPrescriptions info1 = new InfoPrescriptions(0,prescription.getIdpres(),obj1.getIdmed(),10,"Boites");
+        InfoPrescriptions info2 = new InfoPrescriptions(0,prescription.getIdpres(),obj2.getIdmed(),50,"cl");
+        InfoPrescDAO infod=new InfoPrescDAO();
+        infod.setDbConnect(dbConnect);
+        info1=infod.create(info1);
+        info2=infod.create(info2);
+        
+        List<Medicaments> result=instance.rechNom(nomrech);
+        //List<vue_qtite_presc> result = instance.rechNom(nomrech);
+        boolean ok1=false, ok2=false;
+        for(int i=0;i<result.size();i++){
+            if(obj1.getNom().equalsIgnoreCase(result.get(i).getNom()) && obj1.getIdmed()==result.get(i).getIdmed() && obj1.getDesc().equalsIgnoreCase(result.get(i).getDesc())){
+            ok1=true;
+            }
+            if(obj2.getNom().equalsIgnoreCase(result.get(i).getNom()) && obj2.getIdmed()==result.get(i).getIdmed() && obj2.getDesc().equalsIgnoreCase(result.get(i).getDesc())){
+            ok2=true;
+            }
+        }
+        if(!ok1) fail("record introuvable "+obj1);
+        if(!ok2) fail("record introuvable "+obj2);
+        infod.delete(info1);
+        infod.delete(info2);
+        prescriptiond.delete(prescription);
+        medecind.delete(medecin);
+        patientd.delete(patient);
         instance.delete(obj1);
         instance.delete(obj2);
         // TODO review the generated test code and remove the default call to fail.
