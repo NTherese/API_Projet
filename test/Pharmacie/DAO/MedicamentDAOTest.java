@@ -162,7 +162,7 @@ public class MedicamentDAOTest {
     /**
      * Test of delete method, of class MedicamentDAO.
      */
-    //@Test
+    @Test
     public void testDelete() throws Exception {
         System.out.println("delete");
         Medicaments obj = new Medicaments(0,"TestnomDL","TestdescDL","TestcodeDL");
@@ -175,7 +175,7 @@ public class MedicamentDAOTest {
             fail("Exception de record introuvable non generee");
         }
         catch(SQLException e){}
-        instance.create(obj);
+        obj=instance.create(obj);
         Patients patient=new Patients(0,"Testnompat","Testprenompat","Testtelpat");
        PatientDAO patientd= new PatientDAO();
        patientd.setDbConnect(dbConnect);

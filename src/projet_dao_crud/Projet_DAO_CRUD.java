@@ -530,16 +530,16 @@ public class Projet_DAO_CRUD {
     
     //Creation infos prescriptions
      public void creInfPres(){
-         System.out.println("id de la prescription: ");
+         /*System.out.println("id de la prescription: ");
          int idpres=sc.nextInt();
         System.out.println("id du medicament:  ");
-        int idmedoc=sc.nextInt();
+        int idmedoc=sc.nextInt();*/
         System.out.println("Quantite precrites : ");
         int qte=sc.nextInt();
         sc.skip("\n");
          System.out.println("Unite du medicament prescrit: ");
          String unite=sc.nextLine();
-        InfoPrescriptions pres= new InfoPrescriptions(0,idpres,idmedoc,qte,unite);
+        InfoPrescriptions pres= new InfoPrescriptions(0,prescription.getIdpres(),M.getIdmed(),qte,unite);
         try{
             pres=infoDAO.create(pres);
             int id=pres.getIdinfos();
