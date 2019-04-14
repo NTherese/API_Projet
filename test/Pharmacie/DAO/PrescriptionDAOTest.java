@@ -6,13 +6,18 @@
 package Pharmacie.DAO;
 
 import static Pharmacie.DAO.MedicamentDAOTest.dbConnect;
+import Pharmacie.Metier.InfoPrescriptions;
 import Pharmacie.Metier.Medecins;
+import Pharmacie.Metier.Medicaments;
 import Pharmacie.Metier.Patients;
 import Pharmacie.Metier.Prescriptions;
+import Pharmacie.Metier.vue_pres_medic;
+import Pharmacie.Metier.vue_qtite_presc;
 import connections.DBConnection;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -173,6 +178,62 @@ public class PrescriptionDAOTest {
             instance.read(result.getIdpres());
             fail("exception de record introuvable non générée");
         }catch(Exception e){}   
+    }
+    
+    /**
+     * Test of rech method, of class PrescriptionDAO.
+     */
+   //@Test
+    public void testRech() throws Exception {
+        System.out.println("rechNom");
+       
+        
+        Medicaments medoc=new Medicaments(0,"TestnomRC","TestdescRC","TestCodeRC");
+        MedicamentDAO medocd = new MedicamentDAO();
+        medocd.setDbConnect(dbConnect);
+        medoc=medocd.create(medoc);
+                
+        Patients pat=new Patients(0,"NomTest","PrenomTest","0000000000");
+        PatientDAO patd=new PatientDAO();
+        patd.setDbConnect(dbConnect);
+        pat=patd.create(pat);
+        
+        Medecins med=new Medecins(0,"MT","NomTest","PrenomTest","0000000000");
+        MedecinDAO medd=new MedecinDAO();
+        medd.setDbConnect(dbConnect);
+        med=medd.create(med);
+        
+        Prescriptions obj = new Prescriptions(0,LocalDate.now(),med.getIdmed(),pat.getIdpat());
+        PrescriptionDAO instance = new PrescriptionDAO();
+        obj=instance.create(obj);
+        obj.setIdmed(med.getIdmed());
+        Prescriptions expResult=obj;
+        int id=obj.getIdpres();
+        instance.setDbConnect(dbConnect);
+        
+        InfoPrescriptions info1 = new InfoPrescriptions(0,obj.getIdpres(),medoc.getIdmed(),10,"Boites");
+        InfoPrescriptions info2 = new InfoPrescriptions(0,obj.getIdpres(),medoc.getIdmed(),50,"cl");
+        InfoPrescDAO infod=new InfoPrescDAO();
+        infod.setDbConnect(dbConnect);
+        info1=infod.create(info1);
+        info2=infod.create(info2);
+        
+       
+        List<vue_pres_medic> result = instance.rech(id);
+        boolean ok=false;
+        for(int i=0;i<result.size();i++){
+            if(obj.getDateP().equals(result.get(i).getDatepres())){
+                ok=true;
+            }
+        }
+        if(!ok) fail("record introuvable "+obj);
+        infod.delete(info1);
+        infod.delete(info2);
+        instance.delete(obj);
+        medd.delete(med);
+        patd.delete(pat);
+        medocd.delete(medoc);
+        
     }
     
 }

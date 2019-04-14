@@ -1,9 +1,12 @@
 package Pharmacie.DAO;
 
 import Pharmacie.Metier.Prescriptions;
+import Pharmacie.Metier.vue_pres_medic;
 import connections.DBConnection;
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * classe de mappage poo-relationnel precription
@@ -129,6 +132,41 @@ public class PrescriptionDAO extends DAO<Prescriptions>{
         }
     }
       
-    
+    /**
+     * méthode permettant de récupérer tous les médicaments qui ont une
+     * prescription
+     *
+     * @param idpres identifiant de la prescription
+     * @return liste des mediaments prescrits
+     * @throws SQLException element inconnu
+     */
+    public List<vue_pres_medic> rech(int idpres) throws SQLException {
+        List<vue_pres_medic> vue = new ArrayList<>();
+        String req = "select * from vue_pres_medic where idpres= ?";
+        dbConnect = DBConnection.getConnection();
+        try (PreparedStatement pstm = dbConnect.prepareStatement(req)) {
+            pstm.setInt(1, idpres);
+            try (ResultSet rs = pstm.executeQuery()) {
+                boolean trouve = false;
+                while (rs.next()) {
+                    trouve = true;
+                    
+                    LocalDate date=rs.getDate("DATEPRESCRIPTION").toLocalDate();
+                    
+                    String nom = rs.getString("NOM");
+                    String description = rs.getString("DESCRIPTION");
+                    int quantite = rs.getInt("QUANTITE");
+                    String unite = rs.getString("UNITE");
+                    vue.add(new vue_pres_medic(date,nom,description,quantite,unite));
+                }
+
+                if (!trouve) {
+                    throw new SQLException("Element inconnu");
+                } else {
+                    return vue;
+                }
+            }
+        }
+    }
 
 }
