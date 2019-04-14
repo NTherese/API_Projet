@@ -11,6 +11,7 @@ import Pharmacie.DAO.DAO;
 import java.sql.SQLException;
 import java.sql.*;
 import Pharmacie.Metier.Medicaments;
+import Pharmacie.Metier.vue_qtite_presc;
 import connections.DBConnection;
 import java.util.ArrayList;
 import java.util.List;
@@ -169,9 +170,9 @@ public class MedicamentDAO extends DAO<Medicaments> {
      * @return liste de medicaments
      * @throws SQLException nom inconnu
      */
-    public List<Medicaments> rechNom(String nomrech) throws SQLException {
-        List<Medicaments> Meds = new ArrayList<>();
-        String req = "select * from api_medicament where nom like ?";
+    public List<vue_qtite_presc> rechNom(String nomrech) throws SQLException {
+        List<vue_qtite_presc> vue = new ArrayList<>();
+        String req = "select * from qtite_presc where nom like ?";
 
         try (PreparedStatement pstm = dbConnect.prepareStatement(req)) {
             pstm.setString(1, "%"+nomrech+"%");
@@ -182,13 +183,14 @@ public class MedicamentDAO extends DAO<Medicaments> {
                     int id = rs.getInt("IDMEDOC");
                     String nom = rs.getString("NOM");
                     String des = rs.getString("DESCRIPTION");
-                    String code = rs.getString("CODE");
-                    Meds.add(new Medicaments(id,nom,des,code));
+                    int somme =rs.getInt("somme");
+                    String unite = rs.getString("UNITE");
+                    vue.add(new vue_qtite_presc(id,nom,des,somme,unite));
                 }
                 if (!trouve) {
                     throw new SQLException("nom inconnu");
                 } else {
-                    return Meds;
+                    return vue;
                 }
             }
         }

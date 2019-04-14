@@ -246,14 +246,14 @@ public class MedicamentDAOTest {
         info1=infod.create(info1);
         info2=infod.create(info2);
         
-        List<Medicaments> result=instance.rechNom(nomrech);
-        //List<vue_qtite_presc> result = instance.rechNom(nomrech);
+       
+        List<vue_qtite_presc> result = instance.rechNom(nomrech);
         boolean ok1=false, ok2=false;
         for(int i=0;i<result.size();i++){
-            if(obj1.getNom().equalsIgnoreCase(result.get(i).getNom()) && obj1.getIdmed()==result.get(i).getIdmed() && obj1.getDesc().equalsIgnoreCase(result.get(i).getDesc())){
+            if(obj1.getNom().equalsIgnoreCase(result.get(i).getNom()) && obj1.getIdmed()==result.get(i).getIdemedoc() && obj1.getDesc().equalsIgnoreCase(result.get(i).getDescription())){
             ok1=true;
             }
-            if(obj2.getNom().equalsIgnoreCase(result.get(i).getNom()) && obj2.getIdmed()==result.get(i).getIdmed() && obj2.getDesc().equalsIgnoreCase(result.get(i).getDesc())){
+            if(obj2.getNom().equalsIgnoreCase(result.get(i).getNom()) && obj2.getIdmed()==result.get(i).getIdemedoc() && obj2.getDesc().equalsIgnoreCase(result.get(i).getDescription())){
             ok2=true;
             }
         }

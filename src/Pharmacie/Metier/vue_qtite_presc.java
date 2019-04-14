@@ -64,7 +64,7 @@ public class vue_qtite_presc {
 
     @Override
     public String toString() {
-        return "vue_qtite_presc{" + "idemedoc=" + idemedoc + ", nom=" + nom + ", description=" + description + ", somme=" + somme + ", unite=" + unite + '}';
+        return "Médicament n°"+idemedoc+":"+"\nNom :" + nom + " "+description+"\nQuantite totale prescrite:" + somme + " " + unite;
     }
     
     
