@@ -68,7 +68,7 @@ public class MedicamentDAOTest {
         id=expResult.getIdmed();
         Medicaments result = instance.read(id);
         assertEquals("Id differents ",expResult.getIdmed(), result.getIdmed());
-        // TODO review the generated test code and remove the default call to fail.
+        
         try{
             result=instance.read(0);
             fail("Exception d'id inconnu non genere");
@@ -93,7 +93,7 @@ public class MedicamentDAOTest {
         code=expResult.getCode();
         Medicaments result = instance.read(code);
         assertEquals("Codes differents",expResult.getCode(), result.getCode());
-        // TODO review the generated test code and remove the default call to fail.
+        
         try{
             result=instance.read(0);
             fail("Exception d'un code inconnu non genere");
@@ -118,7 +118,7 @@ public class MedicamentDAOTest {
         Medicaments result = instance.create(obj);
         
         assertEquals("Codes differents",expResult.getCode(), result.getCode());
-        // TODO review the generated test code and remove the default call to fail.
+        
         
         assertNotEquals("id medicament reste à zero",result.getIdmed(),expResult.getIdmed());
         int idmed=result.getIdmed();
@@ -266,7 +266,7 @@ public class MedicamentDAOTest {
         patientd.delete(patient);
         instance.delete(obj1);
         instance.delete(obj2);
-        // TODO review the generated test code and remove the default call to fail.
+        
        
     }
     
