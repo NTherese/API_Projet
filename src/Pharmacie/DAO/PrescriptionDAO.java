@@ -142,7 +142,7 @@ public class PrescriptionDAO extends DAO<Prescriptions>{
      */
     public List<vue_pres_medic> rech(int idpres) throws SQLException {
         List<vue_pres_medic> vue = new ArrayList<>();
-        String req = "select * from vue_pres_medic where idpres= ?";
+        String req = "select * from prescr_medic where idpres= ?";
         dbConnect = DBConnection.getConnection();
         try (PreparedStatement pstm = dbConnect.prepareStatement(req)) {
             pstm.setInt(1, idpres);
@@ -161,6 +161,7 @@ public class PrescriptionDAO extends DAO<Prescriptions>{
                 }
 
                 if (!trouve) {
+                    
                     throw new SQLException("Element inconnu");
                 } else {
                     return vue;
@@ -168,5 +169,6 @@ public class PrescriptionDAO extends DAO<Prescriptions>{
             }
         }
     }
-
+    
+   
 }
