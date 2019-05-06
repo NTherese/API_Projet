@@ -50,7 +50,7 @@ public class Projet_DAO_CRUD {
     }
     
     //Menu general du projet
-    public void MenuGeneral(){
+    public void MenuGeneral() throws SQLException{
         int choix;
         String option ="";
         if(dbConnect==null){
@@ -80,20 +80,21 @@ public class Projet_DAO_CRUD {
     //=======================================   GESTION DES MEDICAMENTS + VUE  =======================================================
     
     //Menu gestion des medicaments
-    public void verif(){
+    public void verif() throws SQLException{
         int choix;
         String option ="";
         do{
             do{
-                System.out.println("\n\t\tMENU MEDICAMENT: \n\t1-creation medicament \n\t2-Recherche medicament \n\t3-Consulter les medicaments prescrits \n\t4-Revenir au menu principal");
+                System.out.println("\n\t\tMENU MEDICAMENT: \n\t1-creation medicament \n\t2-Recherche partielle (description) medicament \n\t3- Recherche exacte (code) medicament \n\t4-Consulter les medicaments prescrits \n\t5-Revenir au menu principal");
                 option=sc.nextLine();
-            }while(verifier_chaine(option,"[1-4]") == false);
+            }while(verifier_chaine(option,"[1-5]") == false);
             choix =Integer.parseInt(option);
             switch(choix){
                         case 1: creation();break;
-                        case 2: recherche();break;
-                        case 3: vue(); break;
-                        case 4: MenuGeneral();
+                        case 2: recherchePart();break;
+                        case 3: rechercheExact(); break;
+                        case 4: vue(); break;
+                        case 5: MenuGeneral();
             }
         }while(choix!=4);
     }
@@ -129,8 +130,38 @@ public class Projet_DAO_CRUD {
         }
     }
         
-    //Recherche medicament
-    public void recherche() {
+    
+    //Recherche exacte medicament
+    public void rechercheExact() {
+        String option="";
+        int choix;
+        try {
+            System.out.println("Code du medicament recherché :");
+            String code = sc.nextLine();
+            List<Medicaments> med=new ArrayList<>();
+            med=MedDAO.rechExact(code);
+            System.out.println("Medicament(s) trouvé(s): " + med);
+            do{
+                    do{
+                        System.out.println("Operations à faire sur le medicament: \n\t1-Modifier \n\t2-Supprimer \n\t3-Revenir au menu precedent");
+                        option=sc.nextLine();
+                    }while(verifier_chaine(option,"[1-3]")==false);
+                    choix =Integer.parseInt(option);
+                    switch(choix){
+                        case 1: modification();break;
+                        case 2: supprim();verif();
+                        case 3: verif();
+                    }
+                }while(choix!=3);
+
+        } catch (SQLException e) {
+            System.out.println("Erreur recherche medicament " + e.getMessage());
+        }
+         sc.skip("\n");
+    }
+    
+    //Recherche partielle medicament
+    public void recherchePart() {
         String option="";
         int choix;
         try {
@@ -153,7 +184,7 @@ public class Projet_DAO_CRUD {
                 }while(choix!=3);
 
         } catch (SQLException e) {
-            System.out.println("Erreur recherche medicament" + e.getMessage());
+            System.out.println("Erreur recherche medicament " + e.getMessage());
         }
          sc.skip("\n");
     }
@@ -207,7 +238,7 @@ public class Projet_DAO_CRUD {
     //==========================================    GESTION DES MEDECINS    ==========================================================
     
     //Menu gestion des medecins
-    public void menuMedecin(){
+    public void menuMedecin() throws SQLException{
         int choix;
         String option ="";
         do{
@@ -322,19 +353,20 @@ public class Projet_DAO_CRUD {
     //======================================    GESTION DES PATIENTS    ===========================================================================
     
     //Menu gestion des patients
-    public void menuPat(){
+    public void menuPat() throws SQLException{
         int choix;
         String option ="";
         do{
             do{
-                System.out.println("\n\t\tMENU PATIENTS: \n\t1-creation patient \n\t2-Recherche patient  \n\t3-Revenir au menu principal");
+                System.out.println("\n\t\tMENU PATIENTS: \n\t1-creation patient \n\t2-Recherche nom patient \n\t3-Recherche exacte patient  \n\t4-Revenir au menu principal");
                 option=sc.nextLine();
-            }while(verifier_chaine(option,"[1-3]") == false);
+            }while(verifier_chaine(option,"[1-4]") == false);
             choix =Integer.parseInt(option);
             switch(choix){
                         case 1: crePat();break;
                         case 2: rechPat();break;
-                        case 3:  MenuGeneral();
+                        case 3: recherchExact(); break;
+                        case 4:  MenuGeneral();
             }
         }while(choix!=3);
     }
@@ -357,15 +389,17 @@ public class Projet_DAO_CRUD {
         }
     }
      
-     //Recherche d'un patient
-     public void rechPat(){
-         String option="";
+     //recherche exacte patient
+     
+     public void recherchExact() {
+        String option="";
         int choix;
         try {
-            System.out.println("Identifiant recherché :");
-            int id=sc.nextInt();sc.skip("\n");
-            pat=PDAO.read(id);
-            System.out.println("Patient actuel : " + pat);
+            System.out.println("Identifiant du patient recherché :");
+            int idpat=sc.nextInt();
+            List<Patients> p=new ArrayList<>();
+            p=PDAO.rechEx(idpat);
+            System.out.println("Patient(s) trouvé(s): " + p);
             do{
                     do{
                         System.out.println("Operations à faire sur le patient: \n\t1-Modifier \n\t2-Supprimer \n\t3-Revenir au menu precedent");
@@ -380,7 +414,36 @@ public class Projet_DAO_CRUD {
                 }while(choix!=3);
 
         } catch (SQLException e) {
-            System.out.println("Erreur recherche patient " + e.getMessage());
+            System.out.println("Erreur recherche medicament " + e.getMessage());
+        }
+         sc.skip("\n");
+    }
+     
+     //Recherche d'un patient
+     public void rechPat(){
+         String option="";
+        int choix;
+        try {
+            System.out.println("Nom du patient recherché :");
+            String nom = sc.nextLine();
+            List<Patients> p=new ArrayList<>();
+            p=PDAO.rechPart(nom);
+            System.out.println("Patient(s) trouvé(s): " + p);
+            do{
+                    do{
+                        System.out.println("Operations à faire sur le patient: \n\t1-Modifier \n\t2-Supprimer \n\t3-Revenir au menu precedent");
+                        option=sc.nextLine();
+                    }while(verifier_chaine(option,"[1-3]")==false);
+                    choix =Integer.parseInt(option);
+                    switch(choix){
+                        case 1: modifPat();break;
+                        case 2: supPat();menuPat();
+                        case 3: menuPat();
+                    }
+                }while(choix!=3);
+
+        } catch (SQLException e) {
+            System.out.println("Erreur recherche medicament " + e.getMessage());
         }
          sc.skip("\n");
      }
@@ -435,7 +498,7 @@ public class Projet_DAO_CRUD {
     
     //========================================  GESTION DES PRESCRIPTIONS + VUE========================================================
     //Menu gestion des prescriptions
-    public void menuPrescrip(){
+    public void menuPrescrip() throws SQLException{
         int choix;
         String option ="";
         do{
@@ -504,17 +567,13 @@ public class Projet_DAO_CRUD {
      }
     
      //Vue
-     public void info(){
-         List<vue_pres_medic> vue = new ArrayList<>();
-         System.out.println("Entrez l'identifiant de la prescription: ");
+     public void info() throws SQLException{
+         
+        System.out.println("Entrez l'identifiant de la prescription: ");
         int id=sc.nextInt();
+        List<vue_pres_medic> vue = prescripDAO.rech(id);
         sc.skip("\n");
-        try{
-            System.out.println(prescripDAO.rech(id));
-            
-        } catch (SQLException e) {
-            System.out.println("Erreur: "+e);
-        }
+        System.out.println(vue);
      }
      
      //Suppresion d'une prescription
@@ -528,7 +587,7 @@ public class Projet_DAO_CRUD {
 
     //========================================  GESTION DES INFOS DES PRESCRIPTIONS + VUE ========================================================
     //Menu gestion des informations sur une prescription
-    public void menuInfos(){
+    public void menuInfos() throws SQLException{
         int choix;
         String option ="";
         do{
@@ -618,7 +677,7 @@ public class Projet_DAO_CRUD {
     //======================================== Main General pour executer le programme ========================================================
     
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         Projet_DAO_CRUD proj=new Projet_DAO_CRUD();
         proj.MenuGeneral();
     }

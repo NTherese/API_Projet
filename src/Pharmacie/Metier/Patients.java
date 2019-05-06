@@ -1,5 +1,9 @@
 package Pharmacie.Metier;
 
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
 /**
  * Classe metier de gestion des patients
  * @author meril
@@ -10,6 +14,7 @@ public class Patients {
     protected String nom; // nom du patient
     protected String prenom; //prenom du patient
     protected String tel; //telephone du patient
+    private Set<Prescriptions> prescription=new HashSet<>();
     
     //Constucteur par defaut
     public Patients() {}
@@ -92,6 +97,56 @@ public class Patients {
         this.tel = tel;
     }
 
+    /**
+     * getter de la prescription
+     * @return le set de la prescription
+     */
+    public Set<Prescriptions> getPrescription() {
+        return prescription;
+    }
+    /**
+     * setter prescription
+     * @param prescription 
+     */
+    public void setPrescription(Set<Prescriptions> prescription) {
+        this.prescription = prescription;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 83 * hash + Objects.hashCode(this.nom);
+        hash = 83 * hash + Objects.hashCode(this.prenom);
+        hash = 83 * hash + Objects.hashCode(this.tel);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Patients other = (Patients) obj;
+        if (!Objects.equals(this.nom, other.nom)) {
+            return false;
+        }
+        if (!Objects.equals(this.prenom, other.prenom)) {
+            return false;
+        }
+        if (!Objects.equals(this.tel, other.tel)) {
+            return false;
+        }
+        return true;
+    }
+
+    
+    
     /**
      * Affiche les informations du patient
      * @return la description complete du patient

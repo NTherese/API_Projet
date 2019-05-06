@@ -77,7 +77,6 @@ public class PrescriptionDAOTest {
         Prescriptions result=instance.read(expResult.getIdpres());
         assertEquals("Dates différentes",result.getDateP(),expResult.getDateP());
         assertEquals("Id médecin différents",result.getIdmed(),expResult.getIdmed());
-        assertEquals("Id patient différents",result.getIdpat(),expResult.getIdpat());
         try {
             instance.read(0);
             fail("exception d'id inconnu non générée");
@@ -108,7 +107,7 @@ public class PrescriptionDAOTest {
         Prescriptions result=instance.create(obj);
         assertEquals("Dates différentes",result.getDateP(),expResult.getDateP());
         assertEquals("Id médecin différents",result.getIdmed(),expResult.getIdmed());
-        assertEquals("Id patient différents",result.getIdpat(),expResult.getIdpat());
+        
         instance.delete(result);
         p.delete(pat);
         m.delete(med);
@@ -140,7 +139,7 @@ public class PrescriptionDAOTest {
         Prescriptions result=instance.update(obj);
         assertEquals("Dates différentes",result.getDateP(),expResult.getDateP());
         assertEquals("Id médecin différents",result.getIdmed(),expResult.getIdmed());
-        assertEquals("Id patient différents",result.getIdpat(),expResult.getIdpat());
+        
         instance.delete(result);
         p.delete(pat);
         m.delete(med);

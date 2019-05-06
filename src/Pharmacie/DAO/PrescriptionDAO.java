@@ -35,6 +35,7 @@ public class PrescriptionDAO extends DAO<Prescriptions>{
                      LocalDate date=rs.getDate("DATEPRESCRIPTION").toLocalDate();
                      int idmedecin=rs.getInt("IDMED");
                      int idpat=rs.getInt("IDPAT");
+                     
                      p=new Prescriptions(id,date,idmedecin,idpat);
                  }
                  else{
@@ -61,14 +62,14 @@ public class PrescriptionDAO extends DAO<Prescriptions>{
         try(PreparedStatement p1=dbConnect.prepareStatement(q1); PreparedStatement p2=dbConnect.prepareStatement(q2)){
             p1.setDate(1,java.sql.Date.valueOf(obj.getDateP()));
             p1.setInt(2,obj.getIdmed());
-            p1.setInt(3,obj.getIdpat());
+            p1.setInt(3,obj.getPatient().getIdpat());
             n=p1.executeUpdate();
             if(n==0){
                 throw new SQLException("erreur creation prescription");
             }
             p2.setDate(1,java.sql.Date.valueOf(obj.getDateP()));
             p2.setInt(2,obj.getIdmed());
-            p2.setInt(3,obj.getIdpat());
+            p2.setInt(3,obj.getPatient().getIdpat());
             try(ResultSet rs=p2.executeQuery()){
                 if(rs.next()){
                     int idpres=rs.getInt(1);
@@ -97,7 +98,7 @@ public class PrescriptionDAO extends DAO<Prescriptions>{
         try(PreparedStatement p=dbConnect.prepareStatement(req)){
             p.setDate(1,java.sql.Date.valueOf(obj.getDateP()));
             p.setInt(2,obj.getIdmed());
-            p.setInt(3,obj.getIdpat());
+            p.setInt(3,obj.getPatient().getIdpat());
             p.setInt(4,obj.getIdpres());
             int n=p.executeUpdate();
             if(n==0){
@@ -168,6 +169,31 @@ public class PrescriptionDAO extends DAO<Prescriptions>{
                 }
             }
         }
+    }
+    
+    public List<Prescriptions> rechEx(int idpres) throws SQLException{
+        List<Prescriptions> pres = new ArrayList<>();
+            String req = "select * from api_prescription where idmed= ?";
+
+        try (PreparedStatement pstm = dbConnect.prepareStatement(req)) {
+            pstm.setInt(1, idpres);
+            try (ResultSet rs = pstm.executeQuery()) {
+                boolean trouve = false;
+                while (rs.next()) {
+                    trouve = true;
+                    LocalDate date=rs.getDate("DATEPRESCRIPTION").toLocalDate();
+                    int idmed = rs.getInt("IDMED");
+                    int idpat = rs.getInt("IDPAT");
+                    pres.add(new Prescriptions(idpres,date,idmed,idpat));
+                }
+                if (!trouve) {
+                    throw new SQLException("nom inconnu");
+                } else {
+                    return pres;
+                }
+            }
+        }
+    
     }
     
    

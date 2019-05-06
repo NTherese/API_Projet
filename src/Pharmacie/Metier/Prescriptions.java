@@ -11,7 +11,7 @@ public class Prescriptions {
     protected int idpres; // identifiant unique de la prescription
     protected LocalDate dateP; // date de la prescription
     protected int idmed;// identifiant du medecin prescripteur
-    protected int idpat;//identifiant du patient qui a la prescription
+    protected Patients patient =new Patients();// patient qui a la prescription
 
     //constructeur par defaut
     public Prescriptions() {}
@@ -23,12 +23,19 @@ public class Prescriptions {
      * @param idmed identifiant du medecin
      * @param idpat  identifiant du patient
      */
+    public Prescriptions(int idpres, LocalDate dateP, int idmed) {
+        this.idpres = idpres;
+        this.dateP = dateP;
+        this.idmed = idmed;
+    }
+    
     public Prescriptions(int idpres, LocalDate dateP, int idmed, int idpat) {
         this.idpres = idpres;
         this.dateP = dateP;
         this.idmed = idmed;
-        this.idpat = idpat;
+        this.patient.idpat=idpat;
     }
+    
 
     /**
      * getter idprescription
@@ -79,30 +86,54 @@ public class Prescriptions {
     }
 
     /**
-     * getter id patient
-     * @return id du patient qui a la prescription
+     * getter patient
+     * @return  patient 
      */
-    public int getIdpat() {
-        return idpat;
+    public Patients getPatient() {
+        return patient;
     }
 
-    /**
-     * setter idpat
-     * @param idpat 
+    /**setter patient
+     * @param patient 
      */
-    public void setIdpat(int idpat) {
-        this.idpat = idpat;
+    public void setPatient(Patients patient) {
+        this.patient = patient;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + this.idpres;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Prescriptions other = (Prescriptions) obj;
+        if (this.idpres != other.idpres) {
+            return false;
+        }
+        return true;
+    }   
 
     /**
      * affichage des informations de la prescription
      * @return description complete de la prescription
      */
+    
     @Override
     public String toString() {
-        return "Prescriptions{" + "idpres=" + idpres + ", dateP=" + dateP + ", idmed=" + idmed + ", idpat=" + idpat + '}';
+        return "Prescriptions{" + "idpres=" + idpres + ", dateP=" + dateP + ", idmed=" + idmed + ", patient=" + patient + '}';
     }
-    
     
     
 }

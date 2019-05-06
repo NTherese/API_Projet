@@ -198,6 +198,33 @@ public class MedicamentDAO extends DAO<Medicaments> {
         
     }
     
+    
+    public List<Medicaments> rechExact(String code) throws SQLException{
+        List<Medicaments> med = new ArrayList<>();
+            String req = "select * from api_medicament where code like ?";
+
+        try (PreparedStatement pstm = dbConnect.prepareStatement(req)) {
+            pstm.setString(1, "%"+code+"%");
+            try (ResultSet rs = pstm.executeQuery()) {
+                boolean trouve = false;
+                while (rs.next()) {
+                    trouve = true;
+                    int id = rs.getInt("IDMEDOC");
+                    String nom = rs.getString("NOM");
+                    String des=rs.getString("DESCRIPTION");
+                    med.add(new Medicaments(id,nom,des,code));
+                }
+                if (!trouve) {
+                    throw new SQLException("nom inconnu");
+                } else {
+                    return med;
+                }
+            }
+        }
+    
+    }
+    
+    
     public List<Medicaments> rechDesc(String des) throws SQLException{
         List<Medicaments> med = new ArrayList<>();
             String req = "select * from api_medicament where description like ?";

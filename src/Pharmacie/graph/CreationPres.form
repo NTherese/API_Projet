@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblidpres" alignment="0" min="-2" pref="177" max="-2" attributes="0"/>
+                          <Component id="lbldatepres" alignment="0" min="-2" pref="155" max="-2" attributes="0"/>
+                          <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel2" alignment="0" min="-2" pref="145" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="90" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="txtidpatpres" max="32767" attributes="0"/>
+                          <Component id="txtidpres" max="32767" attributes="0"/>
+                          <Component id="txtmedpres" max="32767" attributes="0"/>
+                          <Component id="jdatepres" alignment="0" pref="133" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="190" max="-2" attributes="0"/>
+                      <Component id="btcreationPres" min="-2" pref="111" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace pref="159" max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblidpres" alignment="3" min="-2" pref="43" max="-2" attributes="0"/>
+                  <Component id="txtidpres" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="lbldatepres" min="-2" pref="28" max="-2" attributes="0"/>
+                  <Component id="jdatepres" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="txtmedpres" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel2" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
+                  <Component id="txtidpatpres" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="111" max="32767" attributes="0"/>
+              <Component id="btcreationPres" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="101" max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="lblidpres">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="  Identifiant de la prescription"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtidpres">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lbldatepres">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="  Date de la prescription"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="  Identifiant du medecin prescripteur"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtmedpres">
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="  Identifiant du patient"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtidpatpres">
+    </Component>
+    <Component class="javax.swing.JButton" name="btcreationPres">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="   Cr&#xe9;er"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btcreationPresActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="com.toedter.calendar.JDateChooser" name="jdatepres">
+      <Properties>
+        <Property name="dateFormatString" type="java.lang.String" value="dd/MM/yy"/>
+        <Property name="doubleBuffered" type="boolean" value="false"/>
+        <Property name="name" type="java.lang.String" value="jdatepres" noResource="true"/>
+        <Property name="opaque" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+  </SubComponents>
+</Form>
