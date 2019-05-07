@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import static jdk.nashorn.internal.objects.NativeString.trim;
 
 /**
  *
@@ -66,7 +67,6 @@ public class RechExact extends javax.swing.JPanel {
         btdel = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        btnvelrech = new javax.swing.JButton();
 
         lblnumpat.setText("  Identifiant ");
 
@@ -116,13 +116,6 @@ public class RechExact extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        btnvelrech.setText("Nouvelle recherche");
-        btnvelrech.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnvelrechActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -152,8 +145,6 @@ public class RechExact extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(8, 8, 8)
                         .addComponent(btdel)
-                        .addGap(106, 106, 106)
-                        .addComponent(btnvelrech)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
@@ -189,8 +180,7 @@ public class RechExact extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btrech)
                     .addComponent(btmaj)
-                    .addComponent(btdel)
-                    .addComponent(btnvelrech))
+                    .addComponent(btdel))
                 .addGap(28, 28, 28))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -212,7 +202,7 @@ public class RechExact extends javax.swing.JPanel {
      }
        
        try{
-           int idpat=Integer.parseInt(txtnumpat.getText());
+           int idpat=Integer.parseInt(trim(txtnumpat.getText()));
             List<Prescriptions> prescrip=presDAO.rechExacte(idpat);
             int nr = dft1.getRowCount();
             for(int i=nr-1;i>=0;i--)dft1.removeRow(i);
@@ -228,8 +218,7 @@ public class RechExact extends javax.swing.JPanel {
        }
        catch(Exception f){
            JOptionPane.showMessageDialog(this,f.getMessage(),"ERREUR PRESCRIPTION ASSOCIE INTROUVABLE",JOptionPane.ERROR_MESSAGE);
-           int nr = dft1.getRowCount();
-           for(int i=nr-1;i>=0;i--)dft1.removeRow(i);
+           
        }
     }//GEN-LAST:event_btrechActionPerformed
 
@@ -264,18 +253,10 @@ public class RechExact extends javax.swing.JPanel {
      }
     }//GEN-LAST:event_btdelActionPerformed
 
-    private void btnvelrechActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnvelrechActionPerformed
-              txtnumpat.setText("");
-             txtnom.setText("");
-             txtprenom.setText("");
-             txttel.setText("");
-    }//GEN-LAST:event_btnvelrechActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btdel;
     private javax.swing.JButton btmaj;
-    private javax.swing.JButton btnvelrech;
     private javax.swing.JButton btrech;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
