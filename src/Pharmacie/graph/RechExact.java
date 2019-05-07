@@ -6,8 +6,13 @@
 package Pharmacie.graph;
 
 import Pharmacie.DAO.PatientDAO;
+import Pharmacie.DAO.PrescriptionDAO;
 import Pharmacie.Metier.Patients;
+import Pharmacie.Metier.Prescriptions;
+import java.util.List;
+import java.util.Vector;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,13 +22,25 @@ public class RechExact extends javax.swing.JPanel {
 
         PatientDAO patDAO=null;
         Patients pat=null;
+        PrescriptionDAO presDAO=null;
+        Prescriptions pres= null;
+        DefaultTableModel dft1 = new DefaultTableModel();
     /**
      * Creates new form RechExact
      */
     public RechExact() {
         initComponents();
+        dft1.addColumn("idpres");
+        dft1.addColumn("dateprescription");
+        dft1.addColumn("idmed");
+        dft1.addColumn("idpat");
+        jTable1.setModel(dft1);
     }
 
+    public void setPrescriptionDAO(PrescriptionDAO presDAO){
+        this.presDAO=presDAO;
+    }
+    
     public void setPatientDAO(PatientDAO patDAO){
         this.patDAO=patDAO;
     }
@@ -47,6 +64,9 @@ public class RechExact extends javax.swing.JPanel {
         btrech = new javax.swing.JButton();
         btmaj = new javax.swing.JButton();
         btdel = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        btnvelrech = new javax.swing.JButton();
 
         lblnumpat.setText("  Identifiant ");
 
@@ -83,6 +103,26 @@ public class RechExact extends javax.swing.JPanel {
             }
         });
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        btnvelrech.setText("Nouvelle recherche");
+        btnvelrech.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnvelrechActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -108,35 +148,49 @@ public class RechExact extends javax.swing.JPanel {
                                 .addGap(15, 15, 15)
                                 .addComponent(btmaj, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txtnom, javax.swing.GroupLayout.Alignment.TRAILING))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
-                .addComponent(btdel)
-                .addGap(32, 32, 32))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(btdel)
+                        .addGap(106, 106, 106)
+                        .addComponent(btnvelrech)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblnumpat)
-                            .addComponent(txtnumpat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(22, 22, 22)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lblnumpat)
+                                    .addComponent(txtnumpat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addComponent(lblnom))
+                            .addComponent(txtnom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(lblnom))
-                    .addComponent(txtnom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblprenom)
-                    .addComponent(txtprenom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lbltel)
-                    .addComponent(txttel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblprenom)
+                            .addComponent(txtprenom, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lbltel)
+                            .addComponent(txttel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btrech)
                     .addComponent(btmaj)
-                    .addComponent(btdel))
+                    .addComponent(btdel)
+                    .addComponent(btnvelrech))
                 .addGap(28, 28, 28))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -156,7 +210,27 @@ public class RechExact extends javax.swing.JPanel {
        }catch(Exception e){
         JOptionPane.showMessageDialog(this,e.getMessage(),"ERREUR",JOptionPane.ERROR_MESSAGE);
      }
-        
+       
+       try{
+           int idpat=Integer.parseInt(txtnumpat.getText());
+            List<Prescriptions> prescrip=presDAO.rechExacte(idpat);
+            int nr = dft1.getRowCount();
+            for(int i=nr-1;i>=0;i--)dft1.removeRow(i);
+            for(Prescriptions p:prescrip){
+                Vector v = new Vector();
+                v.add(p.getIdpres());
+                v.add(p.getDateP());
+                v.add(p.getIdmed());
+                v.add(p.getPatient().getIdpat());
+                dft1.addRow(v);
+            }       
+            JOptionPane.showMessageDialog(this," prescription associé au patient trouvé","succès",JOptionPane.INFORMATION_MESSAGE);
+       }
+       catch(Exception f){
+           JOptionPane.showMessageDialog(this,f.getMessage(),"ERREUR PRESCRIPTION ASSOCIE INTROUVABLE",JOptionPane.ERROR_MESSAGE);
+           int nr = dft1.getRowCount();
+           for(int i=nr-1;i>=0;i--)dft1.removeRow(i);
+       }
     }//GEN-LAST:event_btrechActionPerformed
 
     private void btmajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btmajActionPerformed
@@ -190,11 +264,21 @@ public class RechExact extends javax.swing.JPanel {
      }
     }//GEN-LAST:event_btdelActionPerformed
 
+    private void btnvelrechActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnvelrechActionPerformed
+              txtnumpat.setText("");
+             txtnom.setText("");
+             txtprenom.setText("");
+             txttel.setText("");
+    }//GEN-LAST:event_btnvelrechActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btdel;
     private javax.swing.JButton btmaj;
+    private javax.swing.JButton btnvelrech;
     private javax.swing.JButton btrech;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblnom;
     private javax.swing.JLabel lblnumpat;
     private javax.swing.JLabel lblprenom;

@@ -50,12 +50,15 @@ public class Gestion_Pharmacie extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        font1 = new Pharmacie.graph.font();
         creation1 = new Pharmacie.graph.Creation();
         creationPres1 = new Pharmacie.graph.CreationPres();
         rechExact1 = new Pharmacie.graph.RechExact();
         rechPart1 = new Pharmacie.graph.RechPart();
         rechPres1 = new Pharmacie.graph.RechPres();
         jMenuBar1 = new javax.swing.JMenuBar();
+        menuAccueil = new javax.swing.JMenu();
+        itemAccueil = new javax.swing.JMenuItem();
         menuPat = new javax.swing.JMenu();
         itemCreaPat = new javax.swing.JMenuItem();
         RechExacte = new javax.swing.JMenuItem();
@@ -66,11 +69,29 @@ public class Gestion_Pharmacie extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.CardLayout());
+        getContentPane().add(font1, "cardAccueil");
         getContentPane().add(creation1, "cardCreaPat");
         getContentPane().add(creationPres1, "cardCreationPres");
         getContentPane().add(rechExact1, "cardRechExacte");
         getContentPane().add(rechPart1, "cardRechPart");
         getContentPane().add(rechPres1, "cardRechPres");
+
+        menuAccueil.setText("Accueil");
+        menuAccueil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuAccueilActionPerformed(evt);
+            }
+        });
+
+        itemAccueil.setText("Accueil Pharmacie");
+        itemAccueil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemAccueilActionPerformed(evt);
+            }
+        });
+        menuAccueil.add(itemAccueil);
+
+        jMenuBar1.add(menuAccueil);
 
         menuPat.setText("Patients");
 
@@ -144,6 +165,14 @@ public class Gestion_Pharmacie extends javax.swing.JFrame {
     private void itemRechPresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemRechPresActionPerformed
         cardl.show(this.getContentPane(),"cardRechPres");
     }//GEN-LAST:event_itemRechPresActionPerformed
+
+    private void menuAccueilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAccueilActionPerformed
+        cardl.show(this.getContentPane(),"cardAccueil");
+    }//GEN-LAST:event_menuAccueilActionPerformed
+
+    private void itemAccueilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemAccueilActionPerformed
+       cardl.show(this.getContentPane(),"cardAccueil");
+    }//GEN-LAST:event_itemAccueilActionPerformed
     
     /**
      * @param args the command line arguments
@@ -185,10 +214,13 @@ public class Gestion_Pharmacie extends javax.swing.JFrame {
     private javax.swing.JMenuItem RechPartielle;
     private Pharmacie.graph.Creation creation1;
     private Pharmacie.graph.CreationPres creationPres1;
+    private Pharmacie.graph.font font1;
+    private javax.swing.JMenuItem itemAccueil;
     private javax.swing.JMenuItem itemCreaPat;
     private javax.swing.JMenuItem itemCreaPres;
     private javax.swing.JMenuItem itemRechPres;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu menuAccueil;
     private javax.swing.JMenu menuPat;
     private javax.swing.JMenu menuPres;
     private Pharmacie.graph.RechExact rechExact1;

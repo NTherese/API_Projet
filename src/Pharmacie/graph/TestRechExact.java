@@ -6,6 +6,7 @@
 package Pharmacie.graph;
 
 import Pharmacie.DAO.PatientDAO;
+import Pharmacie.DAO.PrescriptionDAO;
 import connections.DBConnection;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
@@ -26,9 +27,11 @@ public class TestRechExact extends javax.swing.JFrame {
             System.out.println("connection invalide");
             JOptionPane.showMessageDialog(this,"connexion invalide","ERREUR",JOptionPane.ERROR_MESSAGE);
         }
-        
+       PrescriptionDAO presDAO = new PrescriptionDAO();
+       presDAO.setDbConnect(dbConnect);
       PatientDAO patDAO= new PatientDAO();
       patDAO.setDbConnect(dbConnect);
+      rechExact1.setPrescriptionDAO(presDAO);
       rechExact1.setPatientDAO(patDAO);
     }
 
