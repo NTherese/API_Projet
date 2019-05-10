@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import static jdk.nashorn.internal.objects.NativeString.trim;
 
 /**
  *
@@ -89,7 +88,7 @@ public class RechExact extends javax.swing.JPanel {
             }
         });
 
-        btmaj.setText("MAJ");
+        btmaj.setText("MISE A JOUR");
         btmaj.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btmajActionPerformed(evt);
@@ -126,7 +125,7 @@ public class RechExact extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblnumpat, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(64, 64, 64)
-                        .addComponent(txtnumpat))
+                        .addComponent(txtnumpat, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblnom, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -134,22 +133,21 @@ public class RechExact extends javax.swing.JPanel {
                             .addComponent(lbltel)
                             .addComponent(btrech))
                         .addGap(35, 35, 35)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txttel, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
-                            .addComponent(txtprenom)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(15, 15, 15)
-                                .addComponent(btmaj, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtnom, javax.swing.GroupLayout.Alignment.TRAILING))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txttel, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                                .addComponent(txtprenom)
+                                .addComponent(txtnom, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addComponent(btmaj, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(btdel)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29))))
+                        .addGap(29, 29, 29))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(146, 146, 146)
+                        .addComponent(btdel)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,8 +188,9 @@ public class RechExact extends javax.swing.JPanel {
     }//GEN-LAST:event_txtnumpatActionPerformed
 
     private void btrechActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btrechActionPerformed
-       try{
-           int numpat=Integer.parseInt(txtnumpat.getText());
+       int numpat = 0;
+        try{
+           numpat=Integer.parseInt(txtnumpat.getText());
            pat=patDAO.read(numpat);
            txtnom.setText(pat.getNom());
            txtprenom.setText(pat.getPrenom());
@@ -200,10 +199,10 @@ public class RechExact extends javax.swing.JPanel {
        }catch(Exception e){
         JOptionPane.showMessageDialog(this,e.getMessage(),"ERREUR",JOptionPane.ERROR_MESSAGE);
      }
-       
+        
        try{
-           int idpat=Integer.parseInt(trim(txtnumpat.getText()));
-            List<Prescriptions> prescrip=presDAO.rechExacte(idpat);
+           //System.out.println(numpat);
+            List<Prescriptions> prescrip=presDAO.rechExacte(numpat);
             int nr = dft1.getRowCount();
             for(int i=nr-1;i>=0;i--)dft1.removeRow(i);
             for(Prescriptions p:prescrip){
@@ -211,7 +210,7 @@ public class RechExact extends javax.swing.JPanel {
                 v.add(p.getIdpres());
                 v.add(p.getDateP());
                 v.add(p.getIdmed());
-                v.add(p.getPatient().getIdpat());
+                v.add(p.getIdpat());
                 dft1.addRow(v);
             }       
             JOptionPane.showMessageDialog(this," prescription associé au patient trouvé","succès",JOptionPane.INFORMATION_MESSAGE);

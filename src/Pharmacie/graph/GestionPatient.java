@@ -6,6 +6,7 @@
 package Pharmacie.graph;
 
 import Pharmacie.DAO.PatientDAO;
+import Pharmacie.DAO.PrescriptionDAO;
 import connections.DBConnection;
 import java.awt.CardLayout;
 import java.sql.Connection;
@@ -31,9 +32,11 @@ public class GestionPatient extends javax.swing.JFrame {
         }
         
       PatientDAO patDAO= new PatientDAO();
+      PrescriptionDAO presDAO= new PrescriptionDAO();
       patDAO.setDbConnect(dbConnect);
       creation1.setPatientDAO(patDAO);
       rechExact1.setPatientDAO(patDAO);
+      rechExact1.setPrescriptionDAO(presDAO);
       rechPart1.setPatientDAO(patDAO);
     }
 
@@ -47,8 +50,8 @@ public class GestionPatient extends javax.swing.JFrame {
     private void initComponents() {
 
         creation1 = new Pharmacie.graph.Creation();
-        rechExact1 = new Pharmacie.graph.RechExact();
         rechPart1 = new Pharmacie.graph.RechPart();
+        rechExact1 = new Pharmacie.graph.RechExact();
         jMenuBar1 = new javax.swing.JMenuBar();
         MenuPat = new javax.swing.JMenu();
         itemCrea = new javax.swing.JMenuItem();
@@ -58,8 +61,8 @@ public class GestionPatient extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.CardLayout());
         getContentPane().add(creation1, "cardCreaPat");
-        getContentPane().add(rechExact1, "cardRechNumPat");
         getContentPane().add(rechPart1, "cardRechNomPat");
+        getContentPane().add(rechExact1, "cardRechNumPat");
 
         MenuPat.setText("Patient");
         MenuPat.addActionListener(new java.awt.event.ActionListener() {

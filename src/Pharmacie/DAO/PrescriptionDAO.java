@@ -62,14 +62,14 @@ public class PrescriptionDAO extends DAO<Prescriptions>{
         try(PreparedStatement p1=dbConnect.prepareStatement(q1); PreparedStatement p2=dbConnect.prepareStatement(q2)){
             p1.setDate(1,java.sql.Date.valueOf(obj.getDateP()));
             p1.setInt(2,obj.getIdmed());
-            p1.setInt(3,obj.getPatient().getIdpat());
+            p1.setInt(3,obj.getIdpat());
             n=p1.executeUpdate();
             if(n==0){
                 throw new SQLException("erreur creation prescription");
             }
             p2.setDate(1,java.sql.Date.valueOf(obj.getDateP()));
             p2.setInt(2,obj.getIdmed());
-            p2.setInt(3,obj.getPatient().getIdpat());
+            p2.setInt(3,obj.getIdpat());
             try(ResultSet rs=p2.executeQuery()){
                 if(rs.next()){
                     int idpres=rs.getInt(1);
@@ -98,7 +98,7 @@ public class PrescriptionDAO extends DAO<Prescriptions>{
         try(PreparedStatement p=dbConnect.prepareStatement(req)){
             p.setDate(1,java.sql.Date.valueOf(obj.getDateP()));
             p.setInt(2,obj.getIdmed());
-            p.setInt(3,obj.getPatient().getIdpat());
+            p.setInt(3,obj.getIdpat());
             p.setInt(4,obj.getIdpres());
             int n=p.executeUpdate();
             if(n==0){

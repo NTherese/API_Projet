@@ -10,14 +10,9 @@ import Pharmacie.Metier.Prescriptions;
 import connections.DBConnection;
 import java.sql.Connection;
 
-import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.Month;
-import java.time.temporal.TemporalAccessor;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import static jdk.nashorn.internal.objects.NativeString.substr;
 
 /**
  *
@@ -27,6 +22,8 @@ public class CreationPres extends javax.swing.JPanel{
 
     
     PrescriptionDAO presDAO=null;
+    Prescriptions pres=null;
+    
     
     
     public void setPrescriptionDAO(PrescriptionDAO presDAO){
@@ -54,11 +51,11 @@ public class CreationPres extends javax.swing.JPanel{
         txtidpres = new javax.swing.JTextField();
         lbldatepres = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        txtmedpres = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txtidpatpres = new javax.swing.JTextField();
         btcreationPres = new javax.swing.JButton();
         jdatepres = new com.toedter.calendar.JDateChooser();
+        txtidmedecin = new javax.swing.JTextField();
 
         lblidpres.setText("  Identifiant de la prescription");
 
@@ -77,10 +74,9 @@ public class CreationPres extends javax.swing.JPanel{
             }
         });
 
-        jdatepres.setDateFormatString("dd/MM/yy");
-        jdatepres.setDoubleBuffered(false);
+        jdatepres.setDateFormatString("dd-MM-yyyy");
+        jdatepres.setFocusCycleRoot(true);
         jdatepres.setName("jdatepres"); // NOI18N
-        jdatepres.setOpaque(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -97,14 +93,14 @@ public class CreationPres extends javax.swing.JPanel{
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(90, 90, 90)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtidpatpres)
                             .addComponent(txtidpres)
-                            .addComponent(txtmedpres)
-                            .addComponent(jdatepres, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)))
+                            .addComponent(jdatepres, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
+                            .addComponent(txtidpatpres, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtidmedecin)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(190, 190, 190)
                         .addComponent(btcreationPres, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(159, Short.MAX_VALUE))
+                .addContainerGap(101, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,7 +116,7 @@ public class CreationPres extends javax.swing.JPanel{
                 .addGap(56, 56, 56)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtmedpres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtidmedecin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(48, 48, 48)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -136,15 +132,16 @@ public class CreationPres extends javax.swing.JPanel{
         try{
          
         String date=((JTextField)jdatepres.getDateEditor().getUiComponent()).getText();
-         int jour=Integer.parseInt(date.substring(1,2));
+         int jour=Integer.parseInt(date.substring(0,2));
          int mois=Integer.parseInt(date.substring(4,5));
          int an=Integer.parseInt(date.substring(6));
-         
+            System.out.println(date);
+            System.out.println(an+" "+mois+" "+jour);
         LocalDate datepres=LocalDate.of(an, mois,jour);
         
-        int idmedecin=Integer.parseInt(txtmedpres.getText());
+        int idmedecin=Integer.parseInt(txtidmedecin.getText());
         int idpat=Integer.parseInt(txtidpatpres.getText());
-        Prescriptions pres= new Prescriptions(0,datepres,idmedecin,idpat);
+        pres= new Prescriptions(0,datepres,idmedecin,idpat);
         pres = presDAO.create(pres);
         txtidpres.setText(""+pres.getIdpres());
             JOptionPane.showMessageDialog(this,"Prescription créé","succès",JOptionPane.INFORMATION_MESSAGE);
@@ -164,8 +161,8 @@ public class CreationPres extends javax.swing.JPanel{
     private com.toedter.calendar.JDateChooser jdatepres;
     private javax.swing.JLabel lbldatepres;
     private javax.swing.JLabel lblidpres;
+    private javax.swing.JTextField txtidmedecin;
     private javax.swing.JTextField txtidpatpres;
     private javax.swing.JTextField txtidpres;
-    private javax.swing.JTextField txtmedpres;
     // End of variables declaration//GEN-END:variables
 }

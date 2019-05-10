@@ -29,10 +29,8 @@
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="lblmedecinpres" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="lblidpres" pref="185" max="32767" attributes="0"/>
-                              <Component id="lbldatepres" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="lblidpres" max="32767" attributes="0"/>
+                          <Component id="lbldatepres" max="32767" attributes="0"/>
                           <Component id="lblidpatpres" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="90" max="-2" attributes="0"/>
@@ -44,7 +42,7 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="269" max="32767" attributes="0"/>
+              <EmptySpace pref="235" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -119,7 +117,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btmaj">
       <Properties>
-        <Property name="text" type="java.lang.String" value="MAJ"/>
+        <Property name="text" type="java.lang.String" value="MODIFIER"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btmajActionPerformed"/>

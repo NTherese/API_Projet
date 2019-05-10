@@ -65,7 +65,7 @@ public class RechPres extends javax.swing.JPanel {
             }
         });
 
-        btmaj.setText("MAJ");
+        btmaj.setText("MODIFIER");
         btmaj.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btmajActionPerformed(evt);
@@ -95,9 +95,8 @@ public class RechPres extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblmedecinpres, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(lblidpres, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
-                                .addComponent(lbldatepres, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lblidpres, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbldatepres, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblidpatpres, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(90, 90, 90)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -105,7 +104,7 @@ public class RechPres extends javax.swing.JPanel {
                             .addComponent(txtidmedpres)
                             .addComponent(txtidpatpres)
                             .addComponent(txtdatepres))))
-                .addContainerGap(269, Short.MAX_VALUE))
+                .addContainerGap(235, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -141,7 +140,7 @@ public class RechPres extends javax.swing.JPanel {
            pres=presDAO.read(numpres);
            txtdatepres.setText(pres.getDateP().toString().substring(2));
            txtidmedpres.setText(String.valueOf(pres.getIdmed()));
-           txtidpatpres.setText(String.valueOf(pres.getPatient().getIdpat()));
+           txtidpatpres.setText(String.valueOf(pres.getIdpat()));
            JOptionPane.showMessageDialog(this," prescription trouvé","succès",JOptionPane.INFORMATION_MESSAGE);
        }catch(Exception e){
         JOptionPane.showMessageDialog(this,e.getMessage(),"ERREUR",JOptionPane.ERROR_MESSAGE);

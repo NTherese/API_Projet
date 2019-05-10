@@ -72,17 +72,17 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="Pharmacie.graph.RechExact" name="rechExact1">
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-          <CardConstraints cardName="cardRechNumPat"/>
-        </Constraint>
-      </Constraints>
-    </Component>
     <Component class="Pharmacie.graph.RechPart" name="rechPart1">
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
           <CardConstraints cardName="cardRechNomPat"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="Pharmacie.graph.RechExact" name="rechExact1">
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
+          <CardConstraints cardName="cardRechNumPat"/>
         </Constraint>
       </Constraints>
     </Component>

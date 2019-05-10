@@ -14,7 +14,6 @@ public class Patients {
     protected String nom; // nom du patient
     protected String prenom; //prenom du patient
     protected String tel; //telephone du patient
-    private Set<Prescriptions> prescription=new HashSet<>();
     
     //Constucteur par defaut
     public Patients() {}
@@ -101,17 +100,6 @@ public class Patients {
      * getter de la prescription
      * @return le set de la prescription
      */
-    public Set<Prescriptions> getPrescription() {
-        return prescription;
-    }
-    /**
-     * setter prescription
-     * @param prescription 
-     */
-    public void setPrescription(Set<Prescriptions> prescription) {
-        this.prescription = prescription;
-    }
-
     @Override
     public int hashCode() {
         int hash = 5;

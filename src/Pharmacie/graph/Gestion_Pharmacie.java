@@ -38,6 +38,7 @@ public class Gestion_Pharmacie extends javax.swing.JFrame {
       rechPres1.setPrescriptionDAO(presDAO);
       creation1.setPatientDAO(patDAO);
       rechExact1.setPatientDAO(patDAO);
+      rechExact1.setPrescriptionDAO(presDAO);
       rechPart1.setPatientDAO(patDAO);
     }
 

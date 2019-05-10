@@ -160,7 +160,7 @@ public class Creation extends javax.swing.JPanel {
             Patients pat = new Patients(0,nom,prenom,tel);
             pat=patientDAO.create(pat);
             txtnumpat.setText(""+pat.getIdpat());
-            JOptionPane.showMessageDialog(this,"client créé","succès",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this,"Patient créé","succès",JOptionPane.INFORMATION_MESSAGE);
 
         }
         catch(Exception e){

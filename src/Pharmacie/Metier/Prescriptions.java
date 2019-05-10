@@ -11,7 +11,7 @@ public class Prescriptions {
     protected int idpres; // identifiant unique de la prescription
     protected LocalDate dateP; // date de la prescription
     protected int idmed;// identifiant du medecin prescripteur
-    protected Patients patient =new Patients();// patient qui a la prescription
+    protected int idpat;// patient qui a la prescription
 
     //constructeur par defaut
     public Prescriptions() {}
@@ -33,7 +33,7 @@ public class Prescriptions {
         this.idpres = idpres;
         this.dateP = dateP;
         this.idmed = idmed;
-        this.patient.idpat=idpat;
+        this.idpat=idpat;
     }
     
 
@@ -89,15 +89,17 @@ public class Prescriptions {
      * getter patient
      * @return  patient 
      */
-    public Patients getPatient() {
-        return patient;
+    public int getIdpat() {    
+        return idpat;
     }
 
     /**setter patient
      * @param patient 
      */
-    public void setPatient(Patients patient) {
-        this.patient = patient;
+    
+
+    public void setIdpat(int idpat) {
+        this.idpat = idpat;
     }
 
     @Override
@@ -132,8 +134,12 @@ public class Prescriptions {
     
     @Override
     public String toString() {
-        return "Prescriptions{" + "idpres=" + idpres + ", dateP=" + dateP + ", idmed=" + idmed + ", patient=" + patient + '}';
+        return "Prescriptions{" + "idpres=" + idpres + ", dateP=" + dateP + ", idmed=" + idmed + ", idpat=" + idpat + '}';
     }
+
+    
+    
+    
     
     
 }
