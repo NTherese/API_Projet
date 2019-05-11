@@ -215,7 +215,35 @@ public class PrescriptionDAO extends DAO<Prescriptions>{
                     pres.add(new Prescriptions(idpres,date,idmed,idpat));
                 }
                 if (!trouve) {
-                    throw new SQLException("nom inconnu");
+                    throw new SQLException("id inconnu");
+                } else {
+                    return pres;
+                }
+            }
+        }
+    
+    }
+    
+    
+    public List<Prescriptions> rechExacteMed(int idmed) throws SQLException{
+        List<Prescriptions> pres = new ArrayList<>();
+            String req = "select * from api_prescription where idmed= ?";
+
+        try (PreparedStatement pstm = dbConnect.prepareStatement(req)) {
+            pstm.setInt(1, idmed);
+            try (ResultSet rs = pstm.executeQuery()) {
+                boolean trouve = false;
+                while (rs.next()) {
+                    trouve = true;
+                    
+                    int idpres = rs.getInt("IDPRES");
+                    LocalDate date=rs.getDate("DATEPRESCRIPTION").toLocalDate();
+                    int idpat = rs.getInt("IDPAT");
+                    
+                    pres.add(new Prescriptions(idpres,date,idmed,idpat));
+                }
+                if (!trouve) {
+                    throw new SQLException("id inconnu");
                 } else {
                     return pres;
                 }

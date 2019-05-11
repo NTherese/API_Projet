@@ -5,6 +5,7 @@
  */
 package Pharmacie.graph;
 
+import Pharmacie.DAO.MedecinDAO;
 import Pharmacie.DAO.PatientDAO;
 import Pharmacie.DAO.PrescriptionDAO;
 import connections.DBConnection;
@@ -34,12 +35,20 @@ public class Gestion_Pharmacie extends javax.swing.JFrame {
        patDAO.setDbConnect(dbConnect);
        PrescriptionDAO presDAO= new PrescriptionDAO();
       presDAO.setDbConnect(dbConnect);
+      MedecinDAO medDAO=new MedecinDAO();
+      medDAO.setDbConnect(dbConnect);
       creationPres1.setPrescriptionDAO(presDAO);
       rechPres1.setPrescriptionDAO(presDAO);
+      
       creation1.setPatientDAO(patDAO);
       rechExact1.setPatientDAO(patDAO);
       rechExact1.setPrescriptionDAO(presDAO);
       rechPart1.setPatientDAO(patDAO);
+      
+      creationMedecin1.setMedecinDAO(medDAO);
+      rechPartMedecin1.setMedecinDAO(medDAO);
+      rechExactMedecin1.setMedecinDAO(medDAO);
+      rechExactMedecin1.setPrescriptionDAO(presDAO);
     }
 
     /**
@@ -57,6 +66,9 @@ public class Gestion_Pharmacie extends javax.swing.JFrame {
         rechExact1 = new Pharmacie.graph.RechExact();
         rechPart1 = new Pharmacie.graph.RechPart();
         rechPres1 = new Pharmacie.graph.RechPres();
+        creationMedecin1 = new Pharmacie.graph.CreationMedecin();
+        rechExactMedecin1 = new Pharmacie.graph.RechExactMedecin();
+        rechPartMedecin1 = new Pharmacie.graph.RechPartMedecin();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuAccueil = new javax.swing.JMenu();
         itemAccueil = new javax.swing.JMenuItem();
@@ -67,6 +79,10 @@ public class Gestion_Pharmacie extends javax.swing.JFrame {
         menuPres = new javax.swing.JMenu();
         itemCreaPres = new javax.swing.JMenuItem();
         itemRechPres = new javax.swing.JMenuItem();
+        menuMedecins = new javax.swing.JMenu();
+        itemCreaMed = new javax.swing.JMenuItem();
+        RechPartMed = new javax.swing.JMenuItem();
+        RechExactMed = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.CardLayout());
@@ -76,6 +92,9 @@ public class Gestion_Pharmacie extends javax.swing.JFrame {
         getContentPane().add(rechExact1, "cardRechExacte");
         getContentPane().add(rechPart1, "cardRechPart");
         getContentPane().add(rechPres1, "cardRechPres");
+        getContentPane().add(creationMedecin1, "CardCreationMedecin");
+        getContentPane().add(rechExactMedecin1, "CardRechExactMedecin");
+        getContentPane().add(rechPartMedecin1, "CardRechPartMedecin");
 
         menuAccueil.setText("Accueil");
         menuAccueil.addActionListener(new java.awt.event.ActionListener() {
@@ -142,6 +161,34 @@ public class Gestion_Pharmacie extends javax.swing.JFrame {
 
         jMenuBar1.add(menuPres);
 
+        menuMedecins.setText("Medecins");
+
+        itemCreaMed.setText("Creation medecin");
+        itemCreaMed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemCreaMedActionPerformed(evt);
+            }
+        });
+        menuMedecins.add(itemCreaMed);
+
+        RechPartMed.setText("Recherche par le matricule");
+        RechPartMed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RechPartMedActionPerformed(evt);
+            }
+        });
+        menuMedecins.add(RechPartMed);
+
+        RechExactMed.setText("Recherche par l'identifiant");
+        RechExactMed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RechExactMedActionPerformed(evt);
+            }
+        });
+        menuMedecins.add(RechExactMed);
+
+        jMenuBar1.add(menuMedecins);
+
         setJMenuBar(jMenuBar1);
 
         pack();
@@ -174,6 +221,18 @@ public class Gestion_Pharmacie extends javax.swing.JFrame {
     private void itemAccueilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemAccueilActionPerformed
        cardl.show(this.getContentPane(),"cardAccueil");
     }//GEN-LAST:event_itemAccueilActionPerformed
+
+    private void itemCreaMedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCreaMedActionPerformed
+         cardl.show(this.getContentPane(),"CardCreationMedecin");
+    }//GEN-LAST:event_itemCreaMedActionPerformed
+
+    private void RechPartMedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RechPartMedActionPerformed
+       cardl.show(this.getContentPane(),"CardRechPartMedecin");
+    }//GEN-LAST:event_RechPartMedActionPerformed
+
+    private void RechExactMedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RechExactMedActionPerformed
+       cardl.show(this.getContentPane(),"CardRechExactMedecin");
+    }//GEN-LAST:event_RechExactMedActionPerformed
     
     /**
      * @param args the command line arguments
@@ -211,21 +270,28 @@ public class Gestion_Pharmacie extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem RechExactMed;
     private javax.swing.JMenuItem RechExacte;
+    private javax.swing.JMenuItem RechPartMed;
     private javax.swing.JMenuItem RechPartielle;
     private Pharmacie.graph.Creation creation1;
+    private Pharmacie.graph.CreationMedecin creationMedecin1;
     private Pharmacie.graph.CreationPres creationPres1;
     private Pharmacie.graph.font font1;
     private javax.swing.JMenuItem itemAccueil;
+    private javax.swing.JMenuItem itemCreaMed;
     private javax.swing.JMenuItem itemCreaPat;
     private javax.swing.JMenuItem itemCreaPres;
     private javax.swing.JMenuItem itemRechPres;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu menuAccueil;
+    private javax.swing.JMenu menuMedecins;
     private javax.swing.JMenu menuPat;
     private javax.swing.JMenu menuPres;
     private Pharmacie.graph.RechExact rechExact1;
+    private Pharmacie.graph.RechExactMedecin rechExactMedecin1;
     private Pharmacie.graph.RechPart rechPart1;
+    private Pharmacie.graph.RechPartMedecin rechPartMedecin1;
     private Pharmacie.graph.RechPres rechPres1;
     // End of variables declaration//GEN-END:variables
 }

@@ -147,5 +147,63 @@ public class MedecinDAO extends DAO<Medecins> {
     }
     
     
+        
+     //Recherche partielle sur le matricule du medecin
+    
+    public List<Medecins> rechPart(String mat) throws SQLException{
+        List<Medecins> meds = new ArrayList<>();
+            String req = "select * from api_medecin where matricule=?";
+
+        try (PreparedStatement pstm = dbConnect.prepareStatement(req)) {
+            pstm.setString(1,mat);
+            try (ResultSet rs = pstm.executeQuery()) {
+                boolean trouve = false;
+                while (rs.next()) {
+                    trouve = true;
+                    int idmed=rs.getInt("IDMED");
+                    String nom=rs.getString("NOM");
+                    String prenom=rs.getString("PRENOM");
+                    String tel=rs.getString("TEL");
+                    meds.add(new Medecins(idmed,mat,nom,prenom,tel));
+                }
+                if (!trouve) {
+                    throw new SQLException("Medecin inconnu");
+                } else {
+                    return meds;
+                }
+            }
+        }
+    
+    }
+    
+    
+    // Recherche exacte sur l'identifiant du medecin
+        
+    public List<Medecins> rechEx(int idmed) throws SQLException{
+        List<Medecins> meds = new ArrayList<>();
+            String req = "select * from api_medecin where idmed=?";
+
+        try (PreparedStatement pstm = dbConnect.prepareStatement(req)) {
+            pstm.setInt(1,idmed);
+            try (ResultSet rs = pstm.executeQuery()) {
+                boolean trouve = false;
+                while (rs.next()) {
+                    trouve = true;
+                    String mat=rs.getString("MATRICULE");
+                    String nom=rs.getString("NOM");
+                    String prenom=rs.getString("PRENOM");
+                    String tel=rs.getString("TEL");
+                    meds.add(new Medecins(idmed,mat,nom,prenom,tel));
+                }
+                if (!trouve) {
+                    throw new SQLException("Medecin inconnu");
+                } else {
+                    return meds;
+                }
+            }
+        }
+    
+    }
+    
        
 }
