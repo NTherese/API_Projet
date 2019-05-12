@@ -68,7 +68,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="itemRechPres">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Recherche prescription"/>
+                <Property name="text" type="java.lang.String" value="Recherche prescription + vue"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemRechPresActionPerformed"/>
@@ -103,6 +103,38 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RechExactMedActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="menuMedicaments">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Medicaments"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="itemCreaMedic">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Creation Medicament"/>
+                <Property name="toolTipText" type="java.lang.String" value=""/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemCreaMedicActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="itemRechPartMedic">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Recherche sur la description"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemRechPartMedicActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="itemRechExacteMedic">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Recherche sur le code + vue quantite "/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemRechExacteMedicActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -193,6 +225,27 @@
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
           <CardConstraints cardName="CardRechPartMedecin"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="Pharmacie.graph.CreationMedicaments" name="creationMedicaments1">
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
+          <CardConstraints cardName="CardCreationMedic"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="Pharmacie.graph.RechPartMedic" name="rechPartMedic1">
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
+          <CardConstraints cardName="cardRecPartMedic"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="Pharmacie.graph.RechExacteMedic" name="rechExacteMedic1">
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
+          <CardConstraints cardName="CardRechExacteMedic"/>
         </Constraint>
       </Constraints>
     </Component>

@@ -1,7 +1,6 @@
-package designpatterns.metier;
+package designpatterns.metier.builder;
 
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -9,7 +8,6 @@ import java.util.Set;
  * @author meril
  */
 public class Medicament {
-    
     /**
      * identifiant unique du medicament
      */
@@ -121,35 +119,6 @@ public class Medicament {
         return mesInfos;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 47 * hash + this.idmedoc;
-        hash = 47 * hash + Objects.hashCode(this.code);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Medicament other = (Medicament) obj;
-        if (this.idmedoc != other.idmedoc) {
-            return false;
-        }
-        if (!Objects.equals(this.code, other.code)) {
-            return false;
-        }
-        return true;
-    }
-
     /**
      * afficage des informations du medicament
      * @return informations completes du medicament
@@ -158,9 +127,6 @@ public class Medicament {
     public String toString() {
         return "Medicament{" + "idmedoc=" + idmedoc + ", code=" + code + ", nom=" + nom + ", description=" + description + '}';
     }
-    
-    
-    
     
     
 }

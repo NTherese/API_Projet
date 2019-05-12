@@ -1,7 +1,9 @@
-package designpatterns.metier;
+package designpatterns.metier.builder;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -9,7 +11,6 @@ import java.util.Set;
  * @author meril
  */
 public class Prescription {
-    
     /**
      * identifiant unique de la prescription
      */
@@ -30,6 +31,12 @@ public class Prescription {
      */
     protected Patient monPatient;
     
+    /**
+     * Liste des medicaments prescris
+     */
+    
+    protected List<Medicament> mesMedicaments=new ArrayList<>();
+    
     protected Set<Infos> mesInfos= new HashSet<>();
 
     /**
@@ -45,11 +52,12 @@ public class Prescription {
      * @param monMedecin medecin prescripteur
      * @param monPatient patient precrit
      */
-    public Prescription(int idpres, Date datepres, Medecin monMedecin, Patient monPatient) {
-        this.idpres = idpres;
-        this.datepres = datepres;
-        this.monMedecin = monMedecin;
-        this.monPatient = monPatient;
+    public Prescription(PrescriptionBuilder pb) {
+        this.idpres = pb.idpres;
+        this.datepres = pb.datepres;
+        this.monMedecin = pb.monMedecin;
+        this.monPatient =pb.monPatient;
+        this.mesMedicaments=pb.mesMedicaments;          
     }
 
     /**
@@ -61,14 +69,6 @@ public class Prescription {
     }
 
     /**
-     * setter idpres
-     * @param idpres identifiant prescription 
-     */
-    public void setIdpres(int idpres) {
-        this.idpres = idpres;
-    }
-
-    /**
      * getter datepres
      * @return date de la prescription
      */
@@ -76,31 +76,17 @@ public class Prescription {
         return datepres;
     }
 
-    /**
-     * setter datepre
-     * @param datepres date de la prescription 
-     */
-    public void setDatepres(Date datepres) {
-        this.datepres = datepres;
-    }
-
-    
+        
     public Medecin getMonMedecin() {
         return monMedecin;
     }
 
-    public void setMonMedecin(Medecin monMedecin) {
-        this.monMedecin = monMedecin;
-    }
-
+    
     public Patient getMonPatient() {
         return monPatient;
     }
 
-    public void setMonPatient(Patient monPatient) {
-        this.monPatient = monPatient;
-    }
-
+    
     public Set<Infos> getMesInfos() {
         return mesInfos;
     }
@@ -135,8 +121,60 @@ public class Prescription {
         return "Prescription{" + "idpres=" + idpres + ", datepres=" + datepres + ", monMedecin=" + monMedecin + ", monPatient=" + monPatient + ", mesInfos=" + mesInfos + '}';
     }
     
-    
-    
-    
-    
+    public static class PrescriptionBuilder{
+            /**
+         * identifiant unique de la prescription
+         */
+        protected int idpres;
+
+        /**
+         * date de la prescription
+         */
+        protected java.util.Date datepres;
+
+        /**
+         * Medecin prescripteur
+         */
+        protected Medecin monMedecin;
+
+        /**
+         * Patient precrit
+         */
+        protected Patient monPatient;
+        
+            /**
+         * Liste des medicaments prescris
+         */        
+         protected List<Medicament> mesMedicaments=new ArrayList<>();
+
+        public PrescriptionBuilder(int idpres, Medecin monMedecin, Patient monPatient, List mesMedicaments) throws Exception {
+            if(idpres<=0 || monMedecin==null || monPatient==null || mesMedicaments==null) throw new Exception("Informations de construction de la prescription incompletes");
+        }
+
+        public PrescriptionBuilder setDatepres(Date datepres) {
+            this.datepres=datepres;
+            return this;
+        }
+
+        public PrescriptionBuilder setMedecin(Medecin medecin) {
+            this.monMedecin=medecin;
+            return this;
+        }
+        
+        public PrescriptionBuilder setPatient(Patient patient) {
+            this.monPatient=patient;
+            return this;
+        }
+        
+        public PrescriptionBuilder setMedicament(List<Medicament> monMedic) {
+            this.mesMedicaments=monMedic;
+            return this;
+        }
+        
+        public Prescription build() throws Exception{
+            return new Prescription(this);
+        }
+        
+        
+    }
 }

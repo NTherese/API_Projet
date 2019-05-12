@@ -1,4 +1,4 @@
-package designpatterns.metier;
+package designpatterns.metier.builder;
 
 import java.util.Objects;
 
@@ -7,7 +7,6 @@ import java.util.Objects;
  * @author meril
  */
 public class Infos {
-    
     protected int idinfos;
     protected Medicament monMedicament;
     protected Prescription maPrescription;
@@ -98,7 +97,6 @@ public class Infos {
     public String toString() {
         return "Infos{" + "idinfos=" + idinfos + ", monMedicament=" + monMedicament + ", maPrescription=" + maPrescription + ", unite=" + unite + ", quantite=" + quantite + '}';
     }
-    
     
     
 }

@@ -1,5 +1,4 @@
-package designpatterns.metier;
-
+package designpatterns.metier.builder;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -45,11 +44,11 @@ public class Patient {
      * @param prenom  prenom du patient
      * @param tel telephone du patient
      */
-    public Patient(int idpat, String nom, String prenom, String tel) {
-        this.idpat = idpat;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.tel = tel;
+    public Patient(PatientBuilder pb) {
+        this.idpat = pb.idpat;
+        this.nom = pb.nom;
+        this.prenom = pb.prenom;
+        this.tel = pb.tel;
     }
 
     /**
@@ -60,13 +59,7 @@ public class Patient {
         return idpat;
     }
 
-    /**
-     * setter idpatient
-     * @param idpat identifiant du patient
-     */
-    public void setIdpat(int idpat) {
-        this.idpat = idpat;
-    }
+    
 
     /**
      * getter nom 
@@ -76,13 +69,6 @@ public class Patient {
         return nom;
     }
 
-    /**
-     * setter nom
-     * @param nom  nom du patient
-     */
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
 
     /**
      * getter prenom
@@ -92,13 +78,7 @@ public class Patient {
         return prenom;
     }
 
-    /**
-     * setter prenom
-     * @param prenom prenom du patient 
-     */
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
+    
 
     /**
      * getter tel
@@ -108,13 +88,7 @@ public class Patient {
         return tel;
     }
 
-    /**
-     * setter tel
-     * @param tel telephone du patient 
-     */
-    public void setTel(String tel) {
-        this.tel = tel;
-    }
+    
 
     /**
      * methode toString
@@ -154,6 +128,45 @@ public class Patient {
         return true;
     }
     
+    public static class PatientBuilder{
+                /**
+           * identifiant unique du patient
+           */
+            protected int idpat;
+
+
+            /**
+             * nom du patient
+             */
+            protected String nom;
+
+            /**
+             * prenom du patient
+             */
+            protected String prenom;
+
+            /**
+             * telephone du patient
+             */
+            protected String tel;
     
+            public PatientBuilder(int idpat, String nom) throws Exception{
+                if(idpat<=0 || nom==null) throw new Exception("Informations de construction incompletes");
+            }
+
+        public PatientBuilder setPrenom(String prenom) {
+            this.prenom = prenom;
+            return this;
+        }
+
+        public PatientBuilder setTel(String tel) {
+            this.tel = tel;
+            return this;
+        }
+            
+          public Patient build() throws Exception{
+              return new Patient(this);
+          }  
     
+    }
 }

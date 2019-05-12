@@ -19,14 +19,19 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" min="-2" pref="349" max="-2" attributes="0"/>
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Component id="lblnom" min="-2" pref="48" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="93" max="-2" attributes="0"/>
                       <Component id="txtnom" min="-2" pref="146" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jScrollPane1" min="-2" pref="349" max="-2" attributes="0"/>
+                      <EmptySpace pref="38" max="32767" attributes="0"/>
+                      <Component id="btnvelrech" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="21" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -38,9 +43,18 @@
                   <Component id="lblnom" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtnom" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="208" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" pref="271" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="btnvelrech" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
           </Group>
       </Group>
     </DimensionLayout>
@@ -74,5 +88,13 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JButton" name="btnvelrech">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Nouvelle recherche"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnvelrechActionPerformed"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>

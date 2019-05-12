@@ -5,8 +5,8 @@
  */
 package Pharmacie.graph;
 
-import Pharmacie.DAO.PatientDAO;
-import Pharmacie.Metier.Patients;
+import Pharmacie.DAO.MedicamentDAO;
+import Pharmacie.Metier.Medicaments;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JOptionPane;
@@ -16,27 +16,26 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author meril
  */
-public class RechPart extends javax.swing.JPanel {
+public class RechPartMedic extends javax.swing.JPanel {
 
-    PatientDAO patDAO=null;
+    
+    MedicamentDAO medicDAO=null;
    DefaultTableModel dft1 = new DefaultTableModel();
     /**
-     * Creates new form RechPart
+     * Creates new form RechPartMedic
      */
-    public RechPart() {
+    public RechPartMedic() {
         initComponents();
-        dft1.addColumn("idpat");
+        dft1.addColumn("idmed");
         dft1.addColumn("nom");
-        dft1.addColumn("prenom");
-        dft1.addColumn("tel");
+        dft1.addColumn("description");
+        dft1.addColumn("code");
         jTable1.setModel(dft1);
     }
-    
-    
-    public void setPatientDAO(PatientDAO patDAO){
-        this.patDAO=patDAO;
-    }
 
+    public void setMedicamentDAO(MedicamentDAO medicDAO){
+        this.medicDAO=medicDAO;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -46,17 +45,17 @@ public class RechPart extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblnom = new javax.swing.JLabel();
-        txtnom = new javax.swing.JTextField();
+        lbldescmedic = new javax.swing.JLabel();
+        txtdescmedic = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         btnvelrech = new javax.swing.JButton();
 
-        lblnom.setText("Nom");
+        lbldescmedic.setText("  Description du medicament");
 
-        txtnom.addActionListener(new java.awt.event.ActionListener() {
+        txtdescmedic.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtnomActionPerformed(evt);
+                txtdescmedicActionPerformed(evt);
             }
         });
 
@@ -73,7 +72,7 @@ public class RechPart extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        btnvelrech.setText("Nouvelle recherche");
+        btnvelrech.setText("Nouvelle recherchhe");
         btnvelrech.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnvelrechActionPerformed(evt);
@@ -85,50 +84,49 @@ public class RechPart extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblnom, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(93, 93, 93)
-                        .addComponent(txtnom, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(47, 47, 47)
+                        .addComponent(lbldescmedic, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(88, 88, 88)
+                        .addComponent(txtdescmedic, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                        .addComponent(btnvelrech)
-                        .addGap(25, 25, 25))))
+                        .addGap(87, 87, 87)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(65, 65, 65)
+                        .addComponent(btnvelrech)))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblnom)
-                    .addComponent(txtnom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbldescmedic, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtdescmedic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
-                        .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnvelrech)
-                        .addGap(72, 72, 72))))
+                        .addGap(86, 86, 86))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtnomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnomActionPerformed
-       try{ 
-        String nomRech=txtnom.getText();
-        List<Patients> pat=patDAO.rechPart(nomRech);
+    private void txtdescmedicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtdescmedicActionPerformed
+        try{ 
+        String des=txtdescmedic.getText();
+        List<Medicaments> medics=medicDAO.rechDesc(des);
         int nr = dft1.getRowCount();
         for(int i=nr-1;i>=0;i--)dft1.removeRow(i);
-        for(Patients p:pat){
+        for(Medicaments medic:medics){
             Vector v = new Vector();
-            v.add(p.getIdpat());
-            v.add(p.getNom());
-            v.add(p.getPrenom());
-            v.add(p.getTel());
+            v.add(medic.getIdmed());
+            v.add(medic.getNom());
+            v.add(medic.getDesc());
+            v.add(medic.getCode());
             dft1.addRow(v);
            
         }
@@ -136,11 +134,10 @@ public class RechPart extends javax.swing.JPanel {
        catch(Exception e){
            JOptionPane.showMessageDialog(this,e.getMessage(),"ERREUR",JOptionPane.ERROR_MESSAGE);
        }
-       
-    }//GEN-LAST:event_txtnomActionPerformed
+    }//GEN-LAST:event_txtdescmedicActionPerformed
 
     private void btnvelrechActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnvelrechActionPerformed
-       txtnom.setText("");
+        txtdescmedic.setText("");
     }//GEN-LAST:event_btnvelrechActionPerformed
 
 
@@ -148,7 +145,7 @@ public class RechPart extends javax.swing.JPanel {
     private javax.swing.JButton btnvelrech;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JLabel lblnom;
-    private javax.swing.JTextField txtnom;
+    private javax.swing.JLabel lbldescmedic;
+    private javax.swing.JTextField txtdescmedic;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,17 +1,16 @@
-package designpatterns.metier;
+
+package designpatterns.metier.builder;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-
-
 
 /**
  *
  * @author meril
  */
 public class Medecin {
-  /**
+    /**
    * identifiant unique du medecin
    */
     protected int idmed;
@@ -52,12 +51,12 @@ public class Medecin {
      * @param prenom prenom du medecin
      * @param tel telephone du medecin
      */
-    public Medecin(int idmed, String matricule, String nom, String prenom, String tel) {
-        this.idmed = idmed;
-        this.matricule = matricule;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.tel = tel;
+    public Medecin(MedecinBuilder mb) {
+        this.idmed = mb.idmed;
+        this.matricule = mb.matricule;
+        this.nom =mb.nom;
+        this.prenom = mb.prenom;
+        this.tel = mb.tel;
     }
 
     /**
@@ -68,13 +67,7 @@ public class Medecin {
         return idmed;
     }
 
-    /**
-     * setter idmedecin
-     * @param idmed identifiant du medecin
-     */
-    public void setIdmed(int idmed) {
-        this.idmed = idmed;
-    }
+    
 
     /**
      * getter matricule 
@@ -84,13 +77,7 @@ public class Medecin {
         return matricule;
     }
 
-    /**
-     * setter matricule
-     * @param matricule  matricule du medecin
-     */
-    public void setMatricule(String matricule) {
-        this.matricule = matricule;
-    }
+    
 
     /**
      * getter nom
@@ -100,13 +87,7 @@ public class Medecin {
         return nom;
     }
 
-    /**
-     * setter nom
-     * @param nom nom du medecin 
-     */
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
+    
 
     /**
      * getter prenom
@@ -116,13 +97,7 @@ public class Medecin {
         return prenom;
     }
 
-    /**
-     * setter prenom
-     * @param prenom  prenom du medecin
-     */
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
+    
 
     /**
      * getter telephone
@@ -132,13 +107,7 @@ public class Medecin {
         return tel;
     }
 
-    /**
-     * setter telephone
-     * @param tel  telephone du medecin
-     */
-    public void setTel(String tel) {
-        this.tel = tel;
-    }
+    
 
     /**
      * Methode toString
@@ -155,9 +124,9 @@ public class Medecin {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 37 * hash + this.idmed;
-        hash = 37 * hash + Objects.hashCode(this.matricule);
+        int hash = 7;
+        hash = 83 * hash + this.idmed;
+        hash = 83 * hash + Objects.hashCode(this.matricule);
         return hash;
     }
 
@@ -182,11 +151,49 @@ public class Medecin {
         return true;
     }
 
+    public static class MedecinBuilder{
+      /**
+        * identifiant unique du medecin
+        */
+         protected int idmed;
+
+         /**
+          * matricule unique du medecin
+          */
+         protected String matricule;
+
+         /**
+          * nom du medecin
+          */
+         protected String nom;
+
+         /**
+          * prenom du medecin
+          */
+         protected String prenom;
+
+         /**
+          * telephone du medecin
+          */
+         protected String tel;  
+
+        public MedecinBuilder(int idmed, String matricule, String nom) throws Exception {
+            if(idmed<=0 || matricule==null || nom==null) throw new Exception("Informations de construction incompletes");
+        }
+
+        public MedecinBuilder setPrenom(String prenom) {
+            this.prenom = prenom;
+            return this;
+        }
+
+        public MedecinBuilder setTel(String tel) {
+            this.tel = tel;
+            return this;
+        }
+
+        public Medecin build() throws Exception{
+            return new Medecin(this);
+        }    
     
-    
-    
-    
-    
-    
-    
+    }
 }

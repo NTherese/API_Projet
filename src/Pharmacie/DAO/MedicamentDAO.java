@@ -236,9 +236,10 @@ public class MedicamentDAO extends DAO<Medicaments> {
                 while (rs.next()) {
                     trouve = true;
                     int id = rs.getInt("IDMEDOC");
+                    String description=rs.getString("DESCRIPTION");
                     String nom = rs.getString("NOM");
                     String code=rs.getString("CODE");
-                    med.add(new Medicaments(id,nom,des,code));
+                    med.add(new Medicaments(id,nom,description,code));
                 }
                 if (!trouve) {
                     throw new SQLException("nom inconnu");

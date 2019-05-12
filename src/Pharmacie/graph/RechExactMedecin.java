@@ -71,6 +71,7 @@ public class RechExactMedecin extends javax.swing.JPanel {
         btsup = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        btnveRech = new javax.swing.JButton();
 
         lblidmedecin.setText("  Identifiant medecin");
 
@@ -116,6 +117,13 @@ public class RechExactMedecin extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        btnveRech.setText("Nouvelle recherche");
+        btnveRech.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnveRechActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -150,6 +158,10 @@ public class RechExactMedecin extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 156, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(78, 78, 78))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(222, 222, 222)
+                .addComponent(btnveRech)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,7 +197,9 @@ public class RechExactMedecin extends javax.swing.JPanel {
                     .addComponent(btrech)
                     .addComponent(btmodif)
                     .addComponent(btsup))
-                .addGap(94, 94, 94))
+                .addGap(42, 42, 42)
+                .addComponent(btnveRech)
+                .addGap(27, 27, 27))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -256,9 +270,18 @@ public class RechExactMedecin extends javax.swing.JPanel {
      }
     }//GEN-LAST:event_btsupActionPerformed
 
+    private void btnveRechActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnveRechActionPerformed
+            txtidmedecin.setText("");
+             txtmatmedecin.setText("");
+             txtnommedecin.setText("");
+             txtpremedecin.setText("");
+             txttelmedecin.setText("");
+    }//GEN-LAST:event_btnveRechActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btmodif;
+    private javax.swing.JButton btnveRech;
     private javax.swing.JButton btrech;
     private javax.swing.JButton btsup;
     private javax.swing.JScrollPane jScrollPane1;

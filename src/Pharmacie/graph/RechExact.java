@@ -66,6 +66,7 @@ public class RechExact extends javax.swing.JPanel {
         btdel = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        btnelrech = new javax.swing.JButton();
 
         lblnumpat.setText("  Identifiant ");
 
@@ -115,39 +116,53 @@ public class RechExact extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        btnelrech.setText("Nouvelle recherche");
+        btnelrech.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnelrechActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblnumpat, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(64, 64, 64)
-                        .addComponent(txtnumpat, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblnumpat, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(64, 64, 64)
+                                .addComponent(txtnumpat, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblnom, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblprenom)
+                                    .addComponent(lbltel))
+                                .addGap(76, 76, 76)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txttel, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                                    .addComponent(txtprenom)
+                                    .addComponent(txtnom, javax.swing.GroupLayout.Alignment.TRAILING)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblnom, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblprenom)
-                            .addComponent(lbltel)
-                            .addComponent(btrech))
-                        .addGap(35, 35, 35)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txttel, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
-                                .addComponent(txtprenom)
-                                .addComponent(txtnom, javax.swing.GroupLayout.Alignment.TRAILING))
-                            .addComponent(btmaj, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(22, 22, 22)
+                        .addComponent(btrech)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                        .addComponent(btmaj, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(29, 29, 29))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(146, 146, 146)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btdel)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(320, 320, 320))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(222, 222, 222)
+                .addComponent(btnelrech)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,12 +189,14 @@ public class RechExact extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btrech)
+                    .addComponent(btdel)
                     .addComponent(btmaj)
-                    .addComponent(btdel))
-                .addGap(28, 28, 28))
+                    .addComponent(btrech))
+                .addGap(18, 18, 18)
+                .addComponent(btnelrech)
+                .addGap(17, 17, 17))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -252,10 +269,18 @@ public class RechExact extends javax.swing.JPanel {
      }
     }//GEN-LAST:event_btdelActionPerformed
 
+    private void btnelrechActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnelrechActionPerformed
+       txtnumpat.setText("");
+             txtnom.setText("");
+             txtprenom.setText("");
+             txttel.setText("");
+    }//GEN-LAST:event_btnelrechActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btdel;
     private javax.swing.JButton btmaj;
+    private javax.swing.JButton btnelrech;
     private javax.swing.JButton btrech;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

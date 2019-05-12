@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="lblidmedic" max="32767" attributes="0"/>
+                          <Component id="lblnommedic" max="32767" attributes="0"/>
+                          <Component id="lbldescmedic" pref="189" max="32767" attributes="0"/>
+                          <Component id="lblcodemedic" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="98" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="txtidmedic" max="32767" attributes="0"/>
+                                  <Component id="txtnommedic" pref="173" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="-2" pref="90" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="txtdescmedic" max="32767" attributes="0"/>
+                                  <Component id="txtcodemedic" pref="181" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="307" max="-2" attributes="0"/>
+                      <Component id="btcreamedic" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace pref="206" max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblidmedic" alignment="3" min="-2" pref="49" max="-2" attributes="0"/>
+                  <Component id="txtidmedic" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblnommedic" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
+                  <Component id="txtnommedic" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lbldescmedic" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                  <Component id="txtdescmedic" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblcodemedic" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
+                  <Component id="txtcodemedic" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="128" max="32767" attributes="0"/>
+              <Component id="btcreamedic" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="95" max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="lblidmedic">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="  Identifiant du medicament"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblnommedic">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="  Nom du medicament"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lbldescmedic">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="  Description du medicament"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblcodemedic">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="  Code du medicament"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btcreamedic">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="  Cr&#xe9;ation"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btcreamedicActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtidmedic">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtnommedic">
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtdescmedic">
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtcodemedic">
+    </Component>
+  </SubComponents>
+</Form>

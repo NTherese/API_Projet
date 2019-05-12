@@ -52,6 +52,7 @@ public class RechPartMedecin extends javax.swing.JPanel {
         txtmatmed = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        btnvelrech = new javax.swing.JButton();
 
         lblmatmedecin.setText("  Matricule du medecin");
 
@@ -74,6 +75,13 @@ public class RechPartMedecin extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        btnvelrech.setText("Nouvelle recherche");
+        btnvelrech.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnvelrechActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -87,8 +95,10 @@ public class RechPartMedecin extends javax.swing.JPanel {
                         .addComponent(txtmatmed, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(95, 95, 95)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(131, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(63, 63, 63)
+                        .addComponent(btnvelrech)))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -98,8 +108,13 @@ public class RechPartMedecin extends javax.swing.JPanel {
                     .addComponent(lblmatmedecin, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtmatmed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(22, 22, 22))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnvelrech)
+                        .addGap(84, 84, 84))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -125,8 +140,13 @@ public class RechPartMedecin extends javax.swing.JPanel {
        }
     }//GEN-LAST:event_txtmatmedActionPerformed
 
+    private void btnvelrechActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnvelrechActionPerformed
+        txtmatmed.setText("");
+    }//GEN-LAST:event_btnvelrechActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnvelrech;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblmatmedecin;

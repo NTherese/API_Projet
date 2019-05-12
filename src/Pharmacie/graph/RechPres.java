@@ -7,9 +7,13 @@ package Pharmacie.graph;
 
 import Pharmacie.DAO.PrescriptionDAO;
 import Pharmacie.Metier.Prescriptions;
+import Pharmacie.Metier.vue_pres_medic;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -19,11 +23,18 @@ public class RechPres extends javax.swing.JPanel {
 
     PrescriptionDAO presDAO=null;
     Prescriptions pres=null;
+     DefaultTableModel dft1 = new DefaultTableModel();
     /**
      * Creates new form RechPres
      */
     public RechPres() {
         initComponents();
+        dft1.addColumn("date prescription");
+        dft1.addColumn("nom medicament");
+        dft1.addColumn("description");
+        dft1.addColumn("quantite");
+        dft1.addColumn("unite");
+        jTable1.setModel(dft1);
     }
 
     public void setPrescriptionDAO(PrescriptionDAO presDAO){
@@ -49,6 +60,9 @@ public class RechPres extends javax.swing.JPanel {
         btmaj = new javax.swing.JButton();
         btdel = new javax.swing.JButton();
         txtdatepres = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        btnvelrech = new javax.swing.JButton();
 
         lblidpres.setText("  Identifiant de la prescription");
 
@@ -79,6 +93,26 @@ public class RechPres extends javax.swing.JPanel {
             }
         });
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        btnvelrech.setText("Nouvelle recherche");
+        btnvelrech.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnvelrechActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -86,12 +120,6 @@ public class RechPres extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btrech)
-                        .addGap(86, 86, 86)
-                        .addComponent(btmaj)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
-                        .addComponent(btdel))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblmedecinpres, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -103,40 +131,59 @@ public class RechPres extends javax.swing.JPanel {
                             .addComponent(txtidpres, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
                             .addComponent(txtidmedpres)
                             .addComponent(txtidpatpres)
-                            .addComponent(txtdatepres))))
-                .addContainerGap(235, Short.MAX_VALUE))
+                            .addComponent(txtdatepres)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btrech)
+                        .addGap(86, 86, 86)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnvelrech)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btmaj)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
+                                .addComponent(btdel)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblidpres, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtidpres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbldatepres, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtdatepres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(41, 41, 41)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblmedecinpres, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtidmedpres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblidpatpres, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtidpatpres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 168, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btrech)
-                    .addComponent(btmaj)
-                    .addComponent(btdel))
-                .addGap(97, 97, 97))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblidpres, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtidpres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(36, 36, 36)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbldatepres, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtdatepres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(41, 41, 41)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblmedecinpres, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtidmedpres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(47, 47, 47)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblidpatpres, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtidpatpres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btrech)
+                            .addComponent(btmaj)
+                            .addComponent(btdel))
+                        .addGap(45, 45, 45)
+                        .addComponent(btnvelrech)
+                        .addGap(27, 27, 27))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 112, Short.MAX_VALUE))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btrechActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btrechActionPerformed
+        int numpres=0;
         try{
-           int numpres=Integer.parseInt(txtidpres.getText());
+           numpres=Integer.parseInt(txtidpres.getText());
            pres=presDAO.read(numpres);
            txtdatepres.setText(pres.getDateP().toString().substring(2));
            txtidmedpres.setText(String.valueOf(pres.getIdmed()));
@@ -144,6 +191,27 @@ public class RechPres extends javax.swing.JPanel {
            JOptionPane.showMessageDialog(this," prescription trouvé","succès",JOptionPane.INFORMATION_MESSAGE);
        }catch(Exception e){
         JOptionPane.showMessageDialog(this,e.getMessage(),"ERREUR",JOptionPane.ERROR_MESSAGE);
+       }
+        
+       try{
+           //System.out.println(numpres);
+            List<vue_pres_medic> Vue=presDAO.rech(numpres);
+            int nr = dft1.getRowCount();
+            for(int i=nr-1;i>=0;i--)dft1.removeRow(i);
+            for(vue_pres_medic vue:Vue){
+                Vector v = new Vector();
+                v.add(vue.getDatepres());
+                v.add(vue.getNom());
+                v.add(vue.getDes());
+                v.add(vue.getQte());
+                 v.add(vue.getUnite());
+                dft1.addRow(v);
+            }       
+            JOptionPane.showMessageDialog(this," Detail de la prescription !!!","succès",JOptionPane.INFORMATION_MESSAGE);
+       }
+       catch(Exception f){
+           JOptionPane.showMessageDialog(this,f.getMessage(),"ERREUR: DETAIL INTROUVABLE",JOptionPane.ERROR_MESSAGE);
+           
        }
     }//GEN-LAST:event_btrechActionPerformed
 
@@ -182,11 +250,21 @@ public class RechPres extends javax.swing.JPanel {
      }
     }//GEN-LAST:event_btdelActionPerformed
 
+    private void btnvelrechActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnvelrechActionPerformed
+        txtidpres.setText("");
+        txtdatepres.setText("");
+        txtidmedpres.setText("");
+        txtidpatpres.setText("");
+    }//GEN-LAST:event_btnvelrechActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btdel;
     private javax.swing.JButton btmaj;
+    private javax.swing.JButton btnvelrech;
     private javax.swing.JButton btrech;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lbldatepres;
     private javax.swing.JLabel lblidpatpres;
     private javax.swing.JLabel lblidpres;
