@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -132,6 +133,9 @@ public class PatientDAO extends DAO<Patients>{
             else{
                 System.out.println("Suppression effectuée avec succes!!!!");
             }
+        }
+        catch(SQLIntegrityConstraintViolationException mes){
+            throw new SQLException("Impossible de supprimer car lié à d'autres tables");
         }
     }
     

@@ -161,6 +161,9 @@ public class MedicamentDAO extends DAO<Medicaments> {
                 System.out.println("Suppression effectuée avec succes!!!!");
             }
         }
+        catch(SQLIntegrityConstraintViolationException mes){
+            throw new SQLException("Impossible de supprimer car lié à d'autres tables");
+        }
     }
   
     

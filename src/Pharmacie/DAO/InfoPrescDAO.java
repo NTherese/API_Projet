@@ -107,6 +107,9 @@ public class InfoPrescDAO extends DAO<InfoPrescriptions> {
                 System.out.println("Suppression effectuée avec succes!!!!");
             }
         }
+        catch(SQLIntegrityConstraintViolationException mes){
+            throw new SQLException("Impossible de supprimer car lié à d'autres tables");
+        }
     }
      
      

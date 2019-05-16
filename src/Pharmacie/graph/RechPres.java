@@ -219,7 +219,7 @@ public class RechPres extends javax.swing.JPanel {
         
         try{
            int numpres=Integer.parseInt(txtidpres.getText());
-         int jour=Integer.parseInt(txtdatepres.getText().substring(1,2));
+         int jour=Integer.parseInt(txtdatepres.getText().substring(0,2));
          int mois=Integer.parseInt(txtdatepres.getText().substring(4,5));
          int an=Integer.parseInt(txtdatepres.getText().substring(6));
          
