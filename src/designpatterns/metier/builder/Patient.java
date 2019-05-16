@@ -44,11 +44,11 @@ public class Patient {
      * @param prenom  prenom du patient
      * @param tel telephone du patient
      */
-    public Patient(PatientBuilder pb) {
-        this.idpat = pb.idpat;
-        this.nom = pb.nom;
-        this.prenom = pb.prenom;
-        this.tel = pb.tel;
+    public Patient(int idpat, String nom, String prenom, String tel) {    
+        this.idpat = idpat;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.tel = tel;
     }
 
     /**
@@ -88,7 +88,24 @@ public class Patient {
         return tel;
     }
 
-    
+    public Patient setId(int id) {
+            this.idpat=id;
+            return this;
+        }
+            
+            public Patient setNom(String nom) {
+            this.nom=nom;
+            return this;
+        }
+        public Patient setPrenom(String prenom) {
+            this.prenom = prenom;
+            return this;
+        }
+
+        public Patient setTel(String tel) {
+            this.tel = tel;
+            return this;
+        }
 
     /**
      * methode toString
@@ -128,45 +145,4 @@ public class Patient {
         return true;
     }
     
-    public static class PatientBuilder{
-                /**
-           * identifiant unique du patient
-           */
-            protected int idpat;
-
-
-            /**
-             * nom du patient
-             */
-            protected String nom;
-
-            /**
-             * prenom du patient
-             */
-            protected String prenom;
-
-            /**
-             * telephone du patient
-             */
-            protected String tel;
-    
-            public PatientBuilder(int idpat, String nom) throws Exception{
-                if(idpat<=0 || nom==null) throw new Exception("Informations de construction incompletes");
-            }
-
-        public PatientBuilder setPrenom(String prenom) {
-            this.prenom = prenom;
-            return this;
-        }
-
-        public PatientBuilder setTel(String tel) {
-            this.tel = tel;
-            return this;
-        }
-            
-          public Patient build() throws Exception{
-              return new Patient(this);
-          }  
-    
-    }
 }

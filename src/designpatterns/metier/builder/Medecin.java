@@ -51,12 +51,12 @@ public class Medecin {
      * @param prenom prenom du medecin
      * @param tel telephone du medecin
      */
-    public Medecin(MedecinBuilder mb) {
-        this.idmed = mb.idmed;
-        this.matricule = mb.matricule;
-        this.nom =mb.nom;
-        this.prenom = mb.prenom;
-        this.tel = mb.tel;
+    public Medecin(int idmed, String matricule, String nom, String prenom, String tel) {    
+        this.idmed = idmed;
+        this.matricule = matricule;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.tel = tel;
     }
 
     /**
@@ -108,6 +108,31 @@ public class Medecin {
     }
 
     
+    public Medecin setId(int id) {
+            this.idmed=id;
+            return this;
+        }
+        
+        public Medecin setMat(String mat) {
+            this.matricule=mat;
+            return this;
+        }
+        
+        public Medecin  setNom(String nom) {
+            this.nom=nom;
+            return this;
+        }
+        
+        public Medecin setPrenom(String prenom) {
+            this.prenom = prenom;
+            return this;
+        }
+
+        public Medecin setTel(String tel) {
+            this.tel = tel;
+            return this;
+        }
+    
 
     /**
      * Methode toString
@@ -149,51 +174,5 @@ public class Medecin {
             return false;
         }
         return true;
-    }
-
-    public static class MedecinBuilder{
-      /**
-        * identifiant unique du medecin
-        */
-         protected int idmed;
-
-         /**
-          * matricule unique du medecin
-          */
-         protected String matricule;
-
-         /**
-          * nom du medecin
-          */
-         protected String nom;
-
-         /**
-          * prenom du medecin
-          */
-         protected String prenom;
-
-         /**
-          * telephone du medecin
-          */
-         protected String tel;  
-
-        public MedecinBuilder(int idmed, String matricule, String nom) throws Exception {
-            if(idmed<=0 || matricule==null || nom==null) throw new Exception("Informations de construction incompletes");
-        }
-
-        public MedecinBuilder setPrenom(String prenom) {
-            this.prenom = prenom;
-            return this;
-        }
-
-        public MedecinBuilder setTel(String tel) {
-            this.tel = tel;
-            return this;
-        }
-
-        public Medecin build() throws Exception{
-            return new Medecin(this);
-        }    
-    
     }
 }

@@ -31,12 +31,7 @@ public class Prescription {
      */
     protected Patient monPatient;
     
-    /**
-     * Liste des medicaments prescris
-     */
-    
-    protected List<Medicament> mesMedicaments=new ArrayList<>();
-    
+   
     protected Set<Infos> mesInfos= new HashSet<>();
 
     /**
@@ -52,12 +47,16 @@ public class Prescription {
      * @param monMedecin medecin prescripteur
      * @param monPatient patient precrit
      */
+    
     public Prescription(PrescriptionBuilder pb) {
         this.idpres = pb.idpres;
         this.datepres = pb.datepres;
         this.monMedecin = pb.monMedecin;
         this.monPatient =pb.monPatient;
-        this.mesMedicaments=pb.mesMedicaments;          
+       for(Infos inf:mesInfos){
+           inf.setMaPrescription(this);
+       }  
+        this.mesInfos=pb.mesInfos;
     }
 
     /**
@@ -142,15 +141,15 @@ public class Prescription {
          */
         protected Patient monPatient;
         
-            /**
-         * Liste des medicaments prescris
-         */        
-         protected List<Medicament> mesMedicaments=new ArrayList<>();
+                   
+         protected Set<Infos> mesInfos= new HashSet<>();
 
-        public PrescriptionBuilder(int idpres, Medecin monMedecin, Patient monPatient, List mesMedicaments) throws Exception {
-            if(idpres<=0 || monMedecin==null || monPatient==null || mesMedicaments==null) throw new Exception("Informations de construction de la prescription incompletes");
+
+        public PrescriptionBuilder setId(int id) {
+            this.idpres=id;
+            return this;
         }
-
+        
         public PrescriptionBuilder setDatepres(Date datepres) {
             this.datepres=datepres;
             return this;
@@ -165,13 +164,15 @@ public class Prescription {
             this.monPatient=patient;
             return this;
         }
-        
-        public PrescriptionBuilder setMedicament(List<Medicament> monMedic) {
-            this.mesMedicaments=monMedic;
+
+        public PrescriptionBuilder setMesInfos(Set<Infos> mesInfos) {
+            this.mesInfos = mesInfos;
             return this;
         }
         
+        
         public Prescription build() throws Exception{
+             if(idpres<=0 || datepres==null || monMedecin==null || monPatient==null ) throw new Exception("Informations de construction de la prescription incompletes");
             return new Prescription(this);
         }
         
