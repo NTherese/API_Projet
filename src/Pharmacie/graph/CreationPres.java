@@ -5,12 +5,17 @@
  */
 package Pharmacie.graph;
 
+import Pharmacie.DAO.MedecinDAO;
+import Pharmacie.DAO.PatientDAO;
 import Pharmacie.DAO.PrescriptionDAO;
+import Pharmacie.Metier.Medecins;
+import Pharmacie.Metier.Patients;
 import Pharmacie.Metier.Prescriptions;
-import connections.DBConnection;
-import java.sql.Connection;
-
+import java.sql.SQLException;
+import javax.swing.DefaultComboBoxModel;
 import java.time.LocalDate;
+import java.util.Iterator;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -20,17 +25,27 @@ import javax.swing.JTextField;
  */
 public class CreationPres extends javax.swing.JPanel{
 
-    
+    MedecinDAO medDAO =null;
     PrescriptionDAO presDAO=null;
     Prescriptions pres=null;
-    
+    DefaultComboBoxModel dlm = new DefaultComboBoxModel();
+    DefaultComboBoxModel dlp = new DefaultComboBoxModel();
+    List<Medecins> med;
+    PatientDAO patDAO=null;
+    List<Patients> pat;
     
     
     public void setPrescriptionDAO(PrescriptionDAO presDAO){
         this.presDAO=presDAO;
     }
     
+    public void setPatientDAO(PatientDAO patDAO){
+        this.patDAO= patDAO;
+    }
     
+    public void setMedecinDAO(MedecinDAO medDAO){
+        this.medDAO=medDAO;
+    }
     /**
      * Creates new form CreationPres
      */
@@ -52,10 +67,10 @@ public class CreationPres extends javax.swing.JPanel{
         lbldatepres = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtidpatpres = new javax.swing.JTextField();
         btcreationPres = new javax.swing.JButton();
         jdatepres = new com.toedter.calendar.JDateChooser();
-        txtidmedecin = new javax.swing.JTextField();
+        jComboMedecin = new javax.swing.JComboBox<>();
+        jComboPatient = new javax.swing.JComboBox<>();
 
         lblidpres.setText("  Identifiant de la prescription");
 
@@ -78,6 +93,10 @@ public class CreationPres extends javax.swing.JPanel{
         jdatepres.setFocusCycleRoot(true);
         jdatepres.setName("jdatepres"); // NOI18N
 
+        jComboMedecin.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jComboPatient.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -95,10 +114,10 @@ public class CreationPres extends javax.swing.JPanel{
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtidpres)
                             .addComponent(jdatepres, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
-                            .addComponent(txtidpatpres, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtidmedecin)))
+                            .addComponent(jComboMedecin, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboPatient, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(190, 190, 190)
+                        .addGap(240, 240, 240)
                         .addComponent(btcreationPres, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(101, Short.MAX_VALUE))
         );
@@ -116,17 +135,68 @@ public class CreationPres extends javax.swing.JPanel{
                 .addGap(56, 56, 56)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtidmedecin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboMedecin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(48, 48, 48)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtidpatpres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
+                    .addComponent(jComboPatient, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
                 .addComponent(btcreationPres)
-                .addGap(101, 101, 101))
+                .addGap(104, 104, 104))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    public void inject_patient() {
+        try {
+            pat=patDAO.AfficPat();
+            //System.out.println(pat);
+            if(jComboPatient!=null){
+                jComboPatient.removeAllItems();
+            }
+            //test utilisation des iterateurs
+            Iterator<Patients> itpat=pat.iterator();
+            while(itpat.hasNext()){
+                Patients patient=itpat.next();
+                dlp.addElement(patient.toString());
+            }
+            //test utilisation boucle for
+            /*for (int i = 0; i < pat.size(); i++) {
+                dlp.addElement(pat.get(i).toString());
+ 
+            }*/
+            jComboPatient.setModel(dlp);
+ 
+        } catch (SQLException e) {
+            System.out.println("Exception" + e);
+        }
+    }
+    
+    //jComboMedecin;
+    //private javax.swing.JComboBox<String> jComboPatient
+    public void inject_medecin() {
+        try {
+            med=medDAO.afficher();
+            //System.out.println(med);
+            if(jComboMedecin!=null){
+                jComboMedecin.removeAllItems();
+            }
+            Iterator<Medecins> itmed=med.iterator();
+            while(itmed.hasNext()){
+                Medecins medecin=itmed.next();
+                dlm.addElement(medecin.toString());
+            }
+            
+            /*for (int i = 0; i < med.size(); i++) {
+                dlm.addElement(med.get(i).toString());
+ 
+            }*/
+            jComboMedecin.setModel(dlm);
+ 
+        } catch (SQLException e) {
+            System.out.println("Exception" + e);
+        }
+    }
+    
     private void btcreationPresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btcreationPresActionPerformed
      
         try{
@@ -139,16 +209,22 @@ public class CreationPres extends javax.swing.JPanel{
             System.out.println(an+" "+mois+" "+jour);
         LocalDate datepres=LocalDate.of(an, mois,jour);
         
-        int idmedecin=Integer.parseInt(txtidmedecin.getText());
-        int idpat=Integer.parseInt(txtidpatpres.getText());
-        pres= new Prescriptions(0,datepres,idmedecin,idpat);
+        int position=jComboMedecin.getSelectedIndex();
+        Medecins medecin=med.get(position);
+        //int idmedecin=med.get(position).getIdmed();
+        
+        int x=jComboPatient.getSelectedIndex();
+        Patients patient=pat.get(x);
+        //int idpat=pat.get(x).getIdpat();
+        
+        pres= new Prescriptions(0,datepres,medecin.getIdmed(),patient.getIdpat());
         pres = presDAO.create(pres);
         txtidpres.setText(""+pres.getIdpres());
             JOptionPane.showMessageDialog(this,"Prescription créé","succès",JOptionPane.INFORMATION_MESSAGE);
 
         }
         catch(Exception e){
-            JOptionPane.showMessageDialog(this,e.getMessage(),"ERREUR",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,e.getMessage(),"ERREUR CREATION Prescription",JOptionPane.ERROR_MESSAGE);
         }
     
     }//GEN-LAST:event_btcreationPresActionPerformed
@@ -156,13 +232,13 @@ public class CreationPres extends javax.swing.JPanel{
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btcreationPres;
+    private javax.swing.JComboBox<String> jComboMedecin;
+    private javax.swing.JComboBox<String> jComboPatient;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private com.toedter.calendar.JDateChooser jdatepres;
     private javax.swing.JLabel lbldatepres;
     private javax.swing.JLabel lblidpres;
-    private javax.swing.JTextField txtidmedecin;
-    private javax.swing.JTextField txtidpatpres;
     private javax.swing.JTextField txtidpres;
     // End of variables declaration//GEN-END:variables
 }

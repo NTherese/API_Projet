@@ -172,15 +172,42 @@ public class PatientDAO extends DAO<Patients>{
     
     public List<Patients> rechPart(String nom) throws SQLException{
         List<Patients> pat = new ArrayList<>();
-            String req = "select * from api_patient where nom=?";
+            String req = "select * from api_patient where upper(nom) like ?";
+           
+        try (PreparedStatement pstm = dbConnect.prepareStatement(req)) {
+            pstm.setString(1,"%"+nom.toUpperCase()+"%");
+            try (ResultSet rs = pstm.executeQuery()) {
+                boolean trouve = false;
+                while (rs.next()) {
+                    trouve = true;
+                    String name=rs.getString("NOM");
+                    int idpat=rs.getInt("IDPAT");
+                    String prenom=rs.getString("PRENOM");
+                    String tel=rs.getString("TEL");
+                    pat.add(new Patients(idpat,name,prenom,tel));
+                }
+                if (!trouve) {
+                    throw new SQLException("Patient inconnu");
+                } else {
+                    return pat;
+                }
+            }
+        }
+    
+    }
+    
+    
+    public List<Patients> AfficPat() throws SQLException{
+        List<Patients> pat = new ArrayList<>();
+            String req = "select * from api_patient";
 
         try (PreparedStatement pstm = dbConnect.prepareStatement(req)) {
-            pstm.setString(1,nom);
             try (ResultSet rs = pstm.executeQuery()) {
                 boolean trouve = false;
                 while (rs.next()) {
                     trouve = true;
                     int idpat=rs.getInt("IDPAT");
+                    String nom=rs.getString("NOM");
                     String prenom=rs.getString("PRENOM");
                     String tel=rs.getString("TEL");
                     pat.add(new Patients(idpat,nom,prenom,tel));

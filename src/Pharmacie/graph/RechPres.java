@@ -198,19 +198,21 @@ public class RechPres extends javax.swing.JPanel {
             List<vue_pres_medic> Vue=presDAO.rech(numpres);
             int nr = dft1.getRowCount();
             for(int i=nr-1;i>=0;i--)dft1.removeRow(i);
-            for(vue_pres_medic vue:Vue){
+            Vue.stream().map((vue) -> {
                 Vector v = new Vector();
                 v.add(vue.getDatepres());
                 v.add(vue.getNom());
                 v.add(vue.getDes());
                 v.add(vue.getQte());
-                 v.add(vue.getUnite());
+                v.add(vue.getUnite());
+                return v;
+            }).forEachOrdered((v) -> {
                 dft1.addRow(v);
-            }       
+            });       
             JOptionPane.showMessageDialog(this," Detail de la prescription !!!","succès",JOptionPane.INFORMATION_MESSAGE);
        }
        catch(Exception f){
-           JOptionPane.showMessageDialog(this,f.getMessage(),"ERREUR: DETAIL INTROUVABLE",JOptionPane.ERROR_MESSAGE);
+           JOptionPane.showMessageDialog(this,f.getMessage(),"ERREUR: DETAIL INDISPONIBLE ",JOptionPane.ERROR_MESSAGE);
            
        }
     }//GEN-LAST:event_btrechActionPerformed

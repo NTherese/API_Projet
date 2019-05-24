@@ -123,15 +123,16 @@ public class RechPart extends javax.swing.JPanel {
         List<Patients> pat=patDAO.rechPart(nomRech);
         int nr = dft1.getRowCount();
         for(int i=nr-1;i>=0;i--)dft1.removeRow(i);
-        for(Patients p:pat){
+        pat.stream().map((p) -> {
             Vector v = new Vector();
             v.add(p.getIdpat());
             v.add(p.getNom());
             v.add(p.getPrenom());
             v.add(p.getTel());
-            dft1.addRow(v);
-           
-        }
+               return v;
+           }).forEachOrdered((v) -> {
+               dft1.addRow(v);
+           });
        }
        catch(Exception e){
            JOptionPane.showMessageDialog(this,e.getMessage(),"ERREUR",JOptionPane.ERROR_MESSAGE);

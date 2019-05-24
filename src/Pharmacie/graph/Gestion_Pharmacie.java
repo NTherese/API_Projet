@@ -46,6 +46,10 @@ public class Gestion_Pharmacie extends javax.swing.JFrame {
       
       creationPres1.setPrescriptionDAO(presDAO);
       rechPres1.setPrescriptionDAO(presDAO);
+      creationPres1.setMedecinDAO(medDAO);
+      creationPres1.inject_medecin();
+      creationPres1.setPatientDAO(patDAO);
+      creationPres1.inject_patient();
       
       creation1.setPatientDAO(patDAO);
       rechExact1.setPatientDAO(patDAO);
@@ -325,10 +329,8 @@ public class Gestion_Pharmacie extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Gestion_Pharmacie().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Gestion_Pharmacie().setVisible(true);
         });
     }
 

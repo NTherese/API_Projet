@@ -222,14 +222,16 @@ public class RechExactMedecin extends javax.swing.JPanel {
             List<Prescriptions> prescrip=presDAO.rechExacteMed(numed);
             int nr = dft1.getRowCount();
             for(int i=nr-1;i>=0;i--)dft1.removeRow(i);
-            for(Prescriptions p:prescrip){
+            prescrip.stream().map((p) -> {
                 Vector v = new Vector();
                 v.add(p.getIdpres());
                 v.add(p.getDateP());
                 v.add(p.getIdmed());
                 v.add(p.getIdpat());
+                return v;
+            }).forEachOrdered((v) -> {
                 dft1.addRow(v);
-            }       
+            });       
             JOptionPane.showMessageDialog(this," prescription associé au medecin trouvé","succès",JOptionPane.INFORMATION_MESSAGE);
        }
        catch(Exception f){
@@ -245,8 +247,8 @@ public class RechExactMedecin extends javax.swing.JPanel {
             String nom=txtnommedecin.getText();
             String prenom=txtpremedecin.getText();
             String tel=txttelmedecin.getText();
-            Medecins meds=new Medecins(numed,matricule,nom,prenom,tel);
-            medDAO.update(meds);
+            Medecins medecs=new Medecins(numed,matricule,nom,prenom,tel);
+            medDAO.update(medecs);
             JOptionPane.showMessageDialog(this," medecin mis à jour","succès",JOptionPane.INFORMATION_MESSAGE);
         }
         catch(Exception e){

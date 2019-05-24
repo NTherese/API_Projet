@@ -222,14 +222,16 @@ public class RechExact extends javax.swing.JPanel {
             List<Prescriptions> prescrip=presDAO.rechExacte(numpat);
             int nr = dft1.getRowCount();
             for(int i=nr-1;i>=0;i--)dft1.removeRow(i);
-            for(Prescriptions p:prescrip){
+            prescrip.stream().map((p) -> {
                 Vector v = new Vector();
                 v.add(p.getIdpres());
                 v.add(p.getDateP());
                 v.add(p.getIdmed());
                 v.add(p.getIdpat());
-                dft1.addRow(v);
-            }       
+               return v;
+           }).forEachOrdered((v) -> {       
+               dft1.addRow(v);
+           });
             JOptionPane.showMessageDialog(this," prescription associé au patient trouvé","succès",JOptionPane.INFORMATION_MESSAGE);
        }
        catch(Exception f){

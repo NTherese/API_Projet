@@ -200,15 +200,17 @@ public class RechExacteMedic extends javax.swing.JPanel {
             List<vue_qtite_presc> Vue=medicDAO.rechNom(nomRech);
             int nr = dft1.getRowCount();
             for(int i=nr-1;i>=0;i--)dft1.removeRow(i);
-            for(vue_qtite_presc vue:Vue){
+            Vue.stream().map((vue) -> {
                 Vector v = new Vector();
                 v.add(vue.getIdemedoc());
                 v.add(vue.getNom());
                 v.add(vue.getDescription());
                 v.add(vue.getSomme());
-                 v.add(vue.getUnite());
-                dft1.addRow(v);
-            }       
+                v.add(vue.getUnite());
+               return v;
+           }).forEachOrdered((v) -> {       
+               dft1.addRow(v);
+           });
             JOptionPane.showMessageDialog(this," quantité prescrite de ce medicament trouvé","succès",JOptionPane.INFORMATION_MESSAGE);
        }
        catch(Exception f){

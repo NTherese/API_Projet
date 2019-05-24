@@ -92,10 +92,8 @@ public class TestRechPart extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TestRechPart().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new TestRechPart().setVisible(true);
         });
     }
 

@@ -125,7 +125,7 @@ public class CreationMedicaments extends javax.swing.JPanel {
             Medicaments medics=new Medicaments(0,nom,description,code);
             medics=medicDAO.create(medics);
             txtidmedic.setText(""+medics.getIdmed());
-            JOptionPane.showMessageDialog(this,"Medecin créé","succès",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this,"Medicament créé","succès",JOptionPane.INFORMATION_MESSAGE);
 
         }
         catch(Exception e){

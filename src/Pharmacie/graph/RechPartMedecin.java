@@ -124,16 +124,17 @@ public class RechPartMedecin extends javax.swing.JPanel {
         List<Medecins> meds=medecinDAO.rechPart(mat);
         int nr = dft1.getRowCount();
         for(int i=nr-1;i>=0;i--)dft1.removeRow(i);
-        for(Medecins med:meds){
+        meds.stream().map((med) -> {
             Vector v = new Vector();
             v.add(med.getIdmed());
             v.add(med.getMat());
             v.add(med.getNom());
             v.add(med.getPrenom());
             v.add(med.getTel());
-            dft1.addRow(v);
-           
-        }
+                return v;
+            }).forEachOrdered((v) -> {
+                dft1.addRow(v);
+            });
        }
        catch(Exception e){
            JOptionPane.showMessageDialog(this,e.getMessage(),"ERREUR",JOptionPane.ERROR_MESSAGE);

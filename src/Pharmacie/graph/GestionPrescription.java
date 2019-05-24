@@ -5,6 +5,8 @@
  */
 package Pharmacie.graph;
 
+import Pharmacie.DAO.MedecinDAO;
+import Pharmacie.DAO.PatientDAO;
 import Pharmacie.DAO.PrescriptionDAO;
 import connections.DBConnection;
 import java.awt.CardLayout;
@@ -29,9 +31,18 @@ public class GestionPrescription extends javax.swing.JFrame {
             System.out.println("connection invalide");
             JOptionPane.showMessageDialog(this,"connexion invalide","ERREUR",JOptionPane.ERROR_MESSAGE);
         }
-       PrescriptionDAO presDAO= new PrescriptionDAO();
+      PrescriptionDAO presDAO= new PrescriptionDAO();
       presDAO.setDbConnect(dbConnect);
+      
+      PatientDAO patDAO = new PatientDAO();
+      patDAO.setDbConnect(dbConnect);
+      
+      MedecinDAO medDAO = new MedecinDAO();
+      medDAO.setDbConnect(dbConnect);
+      
       creationPres1.setPrescriptionDAO(presDAO);
+      creationPres1.setMedecinDAO(medDAO);
+      creationPres1.setPatientDAO(patDAO);
       rechPres1.setPrescriptionDAO(presDAO);
     }
 
@@ -118,10 +129,8 @@ public class GestionPrescription extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GestionPrescription().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new GestionPrescription().setVisible(true);
         });
     }
 

@@ -209,5 +209,32 @@ public class MedecinDAO extends DAO<Medecins> {
     
     }
     
+    
+    
+    public List<Medecins> afficher() throws SQLException{
+        List<Medecins> meds = new ArrayList<>();
+            String req = "select * from api_medecin ";
+
+        try (PreparedStatement pstm = dbConnect.prepareStatement(req)) {
+            try (ResultSet rs = pstm.executeQuery()) {
+                boolean trouve = false;
+                while (rs.next()) {
+                    trouve = true;
+                    int idmed=rs.getInt("IDMED");
+                    String mat=rs.getString("MATRICULE");
+                    String nom=rs.getString("NOM");
+                    String prenom=rs.getString("PRENOM");
+                    String tel=rs.getString("TEL");
+                    meds.add(new Medecins(idmed,mat,nom,prenom,tel));
+                }
+                if (!trouve) {
+                    throw new SQLException("Medecin inconnu");
+                } else {
+                    return meds;
+                }
+            }
+        }
+    
+    }
        
 }
