@@ -54,6 +54,8 @@ public class Prescription {
         this.datepres = datepres;
         this.monMedecin = monMedecin;
         this.monPatient = monPatient;
+        //Modificatio demandée
+        this.monMedecin.addObserver(this.monPatient);
     }
 
     /**

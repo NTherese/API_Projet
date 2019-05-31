@@ -40,6 +40,8 @@ public class Medecin extends Subject{
     protected String tel;
     
     protected Set<Prescription> mesPrescriptions= new HashSet<>();
+    
+    //protected Patient patient;
 
     /**
      * Contructeur par défaut
@@ -63,6 +65,21 @@ public class Medecin extends Subject{
         this.tel = tel;
     }
 
+    //Possible modification
+    
+    
+    
+    /*public Medecin(int idmed, String matricule, String nom, String prenom, String tel,Patient pat) {
+        this.idmed = idmed;
+        this.matricule = matricule;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.tel = tel;
+       this.patient=pat;
+       this.addObserver(pat);
+    }*/
+    
+    
     /**
      * getter idmedecin
      * @return  identifiant du medecin

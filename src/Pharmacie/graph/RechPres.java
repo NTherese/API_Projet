@@ -185,7 +185,7 @@ public class RechPres extends javax.swing.JPanel {
         try{
            numpres=Integer.parseInt(txtidpres.getText());
            pres=presDAO.read(numpres);
-           txtdatepres.setText(pres.getDateP().toString().substring(2));
+           txtdatepres.setText(pres.getDateP().toString());
            txtidmedpres.setText(String.valueOf(pres.getIdmed()));
            txtidpatpres.setText(String.valueOf(pres.getIdpat()));
            JOptionPane.showMessageDialog(this," prescription trouvé","succès",JOptionPane.INFORMATION_MESSAGE);

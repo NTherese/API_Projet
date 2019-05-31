@@ -1,5 +1,8 @@
 package designpatterns.metier.observer;
 
+import java.sql.Date;
+import java.time.LocalDate;
+
 /**
  *
  * @author meril
@@ -17,13 +20,21 @@ public class Pharmacie {
          Patient p2=new Patient(2,"Patient nom 2","Patient prenom 2","Patient tel 2");
         
          
-        m1.addObserver(p1);
+       /* m1.addObserver(p1);
         m1.addObserver(p2);
-        m2.addObserver(p1);
+        m2.addObserver(p1);*/
         
+       
+        
+        
+        Prescription pres1=new Prescription(1,Date.valueOf(LocalDate.now()),m1,p1);
+        Prescription pres2=new Prescription(2,Date.valueOf(LocalDate.now()),m2,p2);
+        Prescription pres3=new Prescription(3,Date.valueOf(LocalDate.now()),m1,p2);
+         
         m1.setTel("modif tel docteur 1");
         m2.setTel("modif tel docteur 2");
         
+               
     }
-    
+        
 }

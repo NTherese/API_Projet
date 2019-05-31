@@ -205,7 +205,8 @@ public class RechExact extends javax.swing.JPanel {
     }//GEN-LAST:event_txtnumpatActionPerformed
 
     private void btrechActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btrechActionPerformed
-       int numpat = 0;
+       int except = 0; //Pour la modification demandée
+        int numpat = 0;
         try{
            numpat=Integer.parseInt(txtnumpat.getText());
            pat=patDAO.read(numpat);
@@ -214,9 +215,13 @@ public class RechExact extends javax.swing.JPanel {
            txttel.setText(pat.getTel());
            JOptionPane.showMessageDialog(this," patient trouvé","succès",JOptionPane.INFORMATION_MESSAGE);
        }catch(Exception e){
-        JOptionPane.showMessageDialog(this,e.getMessage(),"ERREUR",JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this,e.getMessage(),"ERREUR PATIENT",JOptionPane.ERROR_MESSAGE);
+        except=1;
      }
-        
+     if(except==1){
+         
+     }
+     else{
        try{
            //System.out.println(numpat);
             List<Prescriptions> prescrip=presDAO.rechExacte(numpat);
@@ -235,9 +240,10 @@ public class RechExact extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this," prescription associé au patient trouvé","succès",JOptionPane.INFORMATION_MESSAGE);
        }
        catch(Exception f){
-           JOptionPane.showMessageDialog(this,f.getMessage(),"ERREUR PRESCRIPTION ASSOCIE INTROUVABLE",JOptionPane.ERROR_MESSAGE);
+           JOptionPane.showMessageDialog(this,"Pas de prescription pour ce patient","ERREUR PRESCRIPTION ASSOCIE INTROUVABLE",JOptionPane.ERROR_MESSAGE);
            
        }
+     }
     }//GEN-LAST:event_btrechActionPerformed
 
     private void btmajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btmajActionPerformed
